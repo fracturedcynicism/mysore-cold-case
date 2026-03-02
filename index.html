@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cold Case: The Mysore Inheritance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Special+Elite&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a0f00;
+    --paper: #f5edd8;
+    --aged: #e8d5a3;
+    --rust: #8b2500;
+    --gold: #b8860b;
+    --stamp-red: #8b0000;
+    --faded: #6b5a3a;
+    --shadow: rgba(26,15,0,0.4);
+    --accent: #2c4a1e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    font-family: 'Crimson Text', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><circle cx='10' cy='10' r='4' fill='%238b2500'/></svg>") 10 10, auto;
+  }
+
+  /* Textured background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px),
+      radial-gradient(ellipse at 20% 20%, #2a1500 0%, #0a0500 60%);
+    z-index: -1;
+  }
+
+  /* ====== TITLE SCREEN ====== */
+  #title-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .title-paper {
+    background: var(--paper);
+    max-width: 720px;
+    width: 100%;
+    padding: 4rem 3rem;
+    position: relative;
+    box-shadow: 0 0 60px rgba(139,37,0,0.5), 0 0 120px rgba(0,0,0,0.8);
+    border: 1px solid var(--gold);
+  }
+
+  .title-paper::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid var(--gold);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* Aged paper texture */
+  .title-paper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 10% 10%, rgba(139,100,20,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 90% 80%, rgba(100,60,0,0.12) 0%, transparent 50%),
+      url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.04'/></svg>");
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  .case-label {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.85rem;
+    letter-spacing: 0.4em;
+    color: var(--faded);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .classified-stamp {
+    display: inline-block;
+    border: 3px solid var(--stamp-red);
+    color: var(--stamp-red);
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    padding: 0.2rem 0.8rem;
+    transform: rotate(-2deg);
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  .game-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .game-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--rust);
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    position: relative;
+    z-index: 1;
+  }
+  .divider-line { flex: 1; height: 1px; background: var(--gold); opacity: 0.5; }
+  .divider-icon { color: var(--gold); font-size: 1rem; }
+
+  .case-intro {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--faded);
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+  }
+
+  .victim-photo-placeholder {
+    width: 120px;
+    height: 160px;
+    margin: 0 auto 2rem;
+    background: var(--aged);
+    border: 2px solid var(--gold);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    box-shadow: 3px 3px 10px var(--shadow);
+  }
+
+  .victim-photo-placeholder svg { opacity: 0.4; }
+  .photo-caption {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.65rem;
+    color: var(--faded);
+    margin-top: 0.5rem;
+    text-align: center;
+    letter-spacing: 0.1em;
+  }
+
+  .start-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    font-family: 'Special Elite', cursive;
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 1;
+    margin-top: 1rem;
+  }
+
+  .start-btn:hover {
+    background: var(--rust);
+    box-shadow: 0 0 20px rgba(139,37,0,0.6);
+    transform: translateY(-2px);
+  }
+
+  /* ====== GAME SCREEN ====== */
+  #game-screen {
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  /* Top bar */
+  .game-header {
+    background: var(--ink);
+    border-bottom: 2px solid var(--gold);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .game-header-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--paper);
+    font-size: 1.1rem;
+    font-style: italic;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .stat-item {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+  }
+
+  .stat-value { color: var(--paper); }
+
+  /* Main layout */
+  .game-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr 260px;
+    grid-template-rows: 1fr;
+    height: calc(100vh - 60px);
+    overflow: hidden;
+  }
+
+  /* Sidebar nav */
+  .sidebar {
+    background: #120900;
+    border-right: 1px solid rgba(184,134,11,0.3);
+    overflow-y: auto;
+    padding: 1rem 0;
+  }
+
+  .sidebar-section {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .sidebar-section-title {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    opacity: 0.7;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(184,134,11,0.2);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.9rem;
+    color: rgba(245,237,216,0.6);
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 0.1rem;
+  }
+
+  .nav-item:hover { 
+    background: rgba(184,134,11,0.1);
+    color: var(--paper);
+    border-left-color: var(--gold);
+  }
+
+  .nav-item.active {
+    background: rgba(139,37,0,0.3);
+    color: var(--paper);
+    border-left-color: var(--rust);
+  }
+
+  .nav-item.locked { 
+    opacity: 0.35; 
+    cursor: not-allowed;
+  }
+
+  .nav-icon { font-size: 0.9rem; width: 16px; }
+
+  .unlock-badge {
+    margin-left: auto;
+    font-size: 0.65rem;
+    background: rgba(139,37,0,0.4);
+    color: #ff6b6b;
+    padding: 0.1rem 0.35rem;
+    border-radius: 2px;
+    font-family: 'Special Elite', cursive;
+  }
+
+  /* Main content */
+  .main-content {
+    overflow-y: auto;
+    background: #0d0700;
+    padding: 0;
+  }
+
+  .content-panel {
+    display: none;
+    padding: 2rem;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .content-panel.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Paper card */
+  .paper-card {
+    background: var(--paper);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    box-shadow: 4px 4px 20px rgba(0,0,0,0.5);
+    border: 1px solid rgba(184,134,11,0.3);
+  }
+
+  .paper-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 5% 5%, rgba(139,100,20,0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .card-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+  }
+
+  .card-subheading {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--faded);
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+  }
+
+  .card-body {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: #2a1a00;
+  }
+
+  .card-body p { margin-bottom: 0.75rem; }
+
+  .stamp {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    padding: 0.25rem 0.6rem;
+    border: 2px solid;
+    text-transform: uppercase;
+    transform: rotate(3deg);
+  }
+
+  .stamp-red { border-color: var(--stamp-red); color: var(--stamp-red); }
+  .stamp-green { border-color: var(--accent); color: var(--accent); }
+  .stamp-blue { border-color: #1a3a6b; color: #1a3a6b; }
+
+  /* Evidence grid */
+  .evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .evidence-card {
+    background: var(--aged);
+    border: 1px solid rgba(107,90,58,0.4);
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .evidence-card:hover {
+    transform: translateY(-3px) rotate(0.5deg);
+    box-shadow: 4px 6px 15px rgba(0,0,0,0.4);
+  }
+
+  .evidence-number {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.65rem;
+    color: var(--faded);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.4rem;
+  }
+
+  .evidence-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .evidence-desc {
+    font-size: 0.88rem;
+    color: var(--faded);
+    line-height: 1.6;
+  }
+
+  .evidence-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.6rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), rgba(184,134,11,0.1));
+  }
+
+  .timeline-entry {
+    position: relative;
+    margin-bottom: 1.75rem;
+    background: var(--paper);
+    padding: 1.25rem;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.4);
+    border-left: 3px solid var(--gold);
+  }
+
+  .timeline-entry::before {
+    content: '◆';
+    position: absolute;
+    left: calc(-2rem - 0.3rem);
+    top: 1.1rem;
+    font-size: 0.6rem;
+    color: var(--gold);
+  }
+
+  .timeline-time {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    color: var(--rust);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-event {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-detail { font-size: 0.9rem; color: var(--faded); line-height: 1.6; }
+
+  /* Suspect cards */
+  .suspect-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .suspect-card {
+    background: var(--paper);
+    border: 1px solid rgba(107,90,58,0.3);
+    padding: 1.5rem;
+    position: relative;
+    box-shadow: 3px 3px 15px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+  }
+
+  .suspect-card:hover { transform: translateY(-2px); }
+
+  .suspect-avatar {
+    width: 70px;
+    height: 70px;
+    background: var(--aged);
+    border: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    float: left;
+    margin-right: 1rem;
+  }
+
+  .suspect-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .suspect-role {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--faded);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .suspect-detail { font-size: 0.9rem; color: #3a2a00; line-height: 1.65; }
+  .clearfix::after { content: ''; display: block; clear: both; }
+
+  .motive-tag {
+    display: inline-block;
+    background: rgba(139,37,0,0.15);
+    border: 1px solid rgba(139,37,0,0.3);
+    color: var(--rust);
+    font-family: 'Special Elite', cursive;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.15em;
+    margin-top: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .alibi-tag {
+    display: inline-block;
+    background: rgba(44,74,30,0.15);
+    border: 1px solid rgba(44,74,30,0.3);
+    color: var(--accent);
+    font-family: 'Special Elite', cursive;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    letter-spacing: 0.15em;
+    margin-top: 0.4rem;
+    margin-left: 0.4rem;
+    text-transform: uppercase;
+  }
+
+  /* Note board */
+  .noteboard {
+    background: #1a0f00;
+    border: 2px solid rgba(184,134,11,0.2);
+    min-height: 300px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .noteboard-title {
+    font-family: 'Special Elite', cursive;
+    color: var(--gold);
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+  }
+
+  .noteboard textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--paper);
+    font-family: 'Special Elite', cursive;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    resize: vertical;
+    min-height: 200px;
+    outline: none;
+    letter-spacing: 0.05em;
+  }
+
+  .noteboard textarea::placeholder { color: rgba(245,237,216,0.25); }
+
+  /* Accusation panel */
+  .accusation-section {
+    background: var(--paper);
+    padding: 2rem;
+    border: 2px solid var(--rust);
+    position: relative;
+    margin-top: 1rem;
+  }
+
+  .accusation-section::before {
+    content: 'MAKE YOUR ACCUSATION';
+    position: absolute;
+    top: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--paper);
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--rust);
+    padding: 0 1rem;
+  }
+
+  .accusation-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--aged);
+    border: 1px solid var(--gold);
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M0 0l6 8 6-8z' fill='%236b5a3a'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+  }
+
+  .accuse-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--rust);
+    color: var(--paper);
+    border: none;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .accuse-btn:hover { background: #6b1a00; box-shadow: 0 0 15px rgba(139,37,0,0.5); }
+
+  /* Right panel */
+  .right-panel {
+    background: #120900;
+    border-left: 1px solid rgba(184,134,11,0.3);
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .panel-widget {
+    background: #1a0f00;
+    border: 1px solid rgba(184,134,11,0.2);
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .widget-title {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    opacity: 0.8;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(184,134,11,0.15);
+  }
+
+  .clue-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+    padding: 0.4rem;
+    background: rgba(245,237,216,0.04);
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .clue-item:hover { border-left-color: var(--gold); background: rgba(245,237,216,0.08); }
+
+  .clue-dot { 
+    width: 6px; height: 6px; border-radius: 50%; 
+    background: var(--rust); margin-top: 0.4rem; flex-shrink: 0; 
+  }
+
+  .clue-text { font-family: 'Crimson Text', serif; font-size: 0.85rem; color: rgba(245,237,216,0.7); line-height: 1.5; }
+
+  .progress-bar-wrap {
+    background: rgba(184,134,11,0.15);
+    height: 6px;
+    border-radius: 3px;
+    margin: 0.5rem 0;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rust), var(--gold));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  .progress-label {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.7rem;
+    color: rgba(184,134,11,0.7);
+    margin-bottom: 0.25rem;
+  }
+
+  /* Modal overlay */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: var(--paper);
+    max-width: 600px;
+    width: 100%;
+    padding: 2.5rem;
+    position: relative;
+    box-shadow: 0 0 80px rgba(139,37,0,0.6);
+    animation: modalIn 0.3s ease;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  @keyframes modalIn { from { opacity: 0; transform: scale(0.92) rotate(-1deg); } to { opacity: 1; transform: scale(1) rotate(0deg); } }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none; border: none;
+    font-size: 1.2rem; cursor: pointer;
+    color: var(--faded);
+    font-family: 'Special Elite', cursive;
+  }
+
+  .modal-close:hover { color: var(--rust); }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  .modal-subtitle {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--faded);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-body {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: #2a1a00;
+  }
+
+  /* Result screen */
+  #result-screen {
+    display: none;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .result-paper {
+    background: var(--paper);
+    max-width: 600px;
+    width: 100%;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 0 80px rgba(139,37,0,0.6);
+    position: relative;
+  }
+
+  .result-correct { border: 3px solid var(--accent); }
+  .result-wrong { border: 3px solid var(--rust); }
+
+  .result-stamp {
+    font-family: 'Special Elite', cursive;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .result-body {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--faded);
+    margin-bottom: 1.5rem;
+  }
+
+  .replay-btn {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 0.75rem 2rem;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .replay-btn:hover { background: var(--rust); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #0a0500; }
+  ::-webkit-scrollbar-thumb { background: rgba(184,134,11,0.4); border-radius: 3px; }
+
+  /* Red thread connections visual */
+  .connections-hint {
+    background: rgba(139,37,0,0.08);
+    border: 1px dashed rgba(139,37,0,0.3);
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    color: rgba(139,37,0,0.8);
+    letter-spacing: 0.1em;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .game-layout { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; height: auto; }
+    .sidebar { border-right: none; border-bottom: 1px solid rgba(184,134,11,0.3); display: flex; flex-wrap: wrap; padding: 0.5rem; }
+    .sidebar-section { margin-bottom: 0; }
+    .right-panel { border-left: none; border-top: 1px solid rgba(184,134,11,0.3); }
+    .main-content { height: 60vh; }
+    .game-layout { height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== TITLE SCREEN ====== -->
+<div id="title-screen">
+  <div class="title-paper">
+    <div style="text-align:center; position:relative; z-index:1;">
+      <div class="case-label">Karnataka State CID · Case File № 1987-CR-0044</div>
+      <div style="text-align:center; margin-bottom:1rem;">
+        <span class="classified-stamp">Cold Case · Reopened 2024</span>
+      </div>
+      <div class="victim-photo-placeholder">
+        <svg width="50" height="60" viewBox="0 0 50 60">
+          <ellipse cx="25" cy="18" rx="14" ry="16" fill="#6b5a3a"/>
+          <rect x="8" y="34" width="34" height="26" rx="4" fill="#6b5a3a"/>
+        </svg>
+        <div class="photo-caption">VICTIM — RAGHAVENDRA<br>NARASIMHA IYER, 58</div>
+      </div>
+      <div class="game-title">The Mysore<br>Inheritance</div>
+      <div class="game-subtitle">A Cold Case Mystery</div>
+    </div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">✦</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="case-intro">
+      The night of October 14th, 1987. A wealthy silk merchant is found dead in his ancestral haveli in Mysore — poisoned, his estate contested, and the case quietly closed. Thirty-seven years later, new evidence has surfaced. You are a CID investigator tasked with finally solving the murder of <em>Raghavendra Narasimha Iyer</em>.
+    </div>
+
+    <div style="display:flex; gap:1rem; text-align:center; margin-bottom:1.5rem; position:relative; z-index:1;">
+      <div style="flex:1; padding:0.75rem; background:var(--aged); border:1px solid rgba(107,90,58,0.3);">
+        <div style="font-family:'Special Elite',cursive; font-size:0.6rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase;">Suspects</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--ink); font-weight:700;">5</div>
+      </div>
+      <div style="flex:1; padding:0.75rem; background:var(--aged); border:1px solid rgba(107,90,58,0.3);">
+        <div style="font-family:'Special Elite',cursive; font-size:0.6rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase;">Evidence</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--ink); font-weight:700;">12</div>
+      </div>
+      <div style="flex:1; padding:0.75rem; background:var(--aged); border:1px solid rgba(107,90,58,0.3);">
+        <div style="font-family:'Special Elite',cursive; font-size:0.6rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase;">Witnesses</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--ink); font-weight:700;">6</div>
+      </div>
+    </div>
+
+    <button class="start-btn" onclick="startGame()">⟶ Open Case File</button>
+  </div>
+</div>
+
+<!-- ====== GAME SCREEN ====== -->
+<div id="game-screen">
+  <div class="game-header">
+    <div class="game-header-title">The Mysore Inheritance · Case № 1987-CR-0044</div>
+    <div class="header-stats">
+      <div class="stat-item">CLUES FOUND: <span class="stat-value" id="clue-count">0</span>/12</div>
+      <div class="stat-item">STATUS: <span class="stat-value" style="color:#e8c060;">ACTIVE INVESTIGATION</span></div>
+    </div>
+  </div>
+
+  <div class="game-layout">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Case Files</div>
+        <div class="nav-item active" onclick="showPanel('overview')">
+          <span class="nav-icon">📋</span> Case Overview
+        </div>
+        <div class="nav-item" onclick="showPanel('crime-scene')">
+          <span class="nav-icon">🔍</span> Crime Scene
+        </div>
+        <div class="nav-item" onclick="showPanel('timeline')">
+          <span class="nav-icon">🕐</span> Timeline
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">People</div>
+        <div class="nav-item" onclick="showPanel('suspects')">
+          <span class="nav-icon">👤</span> Suspects
+        </div>
+        <div class="nav-item" onclick="showPanel('witnesses')">
+          <span class="nav-icon">🗣</span> Statements
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Evidence</div>
+        <div class="nav-item" onclick="showPanel('evidence')">
+          <span class="nav-icon">🧪</span> Physical Evidence
+        </div>
+        <div class="nav-item" onclick="showPanel('documents')">
+          <span class="nav-icon">📜</span> Documents
+        </div>
+        <div class="nav-item" onclick="showPanel('forensics')">
+          <span class="nav-icon">🔬</span> Forensic Report
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Investigation</div>
+        <div class="nav-item" onclick="showPanel('notes')">
+          <span class="nav-icon">📝</span> My Notes
+        </div>
+        <div class="nav-item" onclick="showPanel('accuse')">
+          <span class="nav-icon">⚖</span> Make Accusation
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <!-- Overview Panel -->
+      <div id="panel-overview" class="content-panel active">
+        <div class="paper-card">
+          <span class="stamp stamp-red">Confidential</span>
+          <div class="card-heading">Case Overview</div>
+          <div class="card-subheading">Karnataka State CID · Filed: 15 October 1987</div>
+          <div class="card-body">
+            <p><strong>Deceased:</strong> Raghavendra Narasimha Iyer, 58 years. Founder of <em>Iyer Silk Emporium</em>, one of Mysore's most prestigious silk trading houses. Known as a shrewd businessman and a difficult man to please.</p>
+            <p><strong>Found:</strong> 7:14 AM, 15 October 1987, in his private study on the upper floor of <em>Iyer Haveli</em>, #12 Sayyaji Rao Road, Mysore. Discovered by his personal valet, Krishnamurthy.</p>
+            <p><strong>Cause of Death:</strong> Suspected poisoning. Post-mortem confirmed acute arsenic toxicity. Death estimated between 10 PM and 1 AM on the night of 14th October.</p>
+            <p><strong>Original Ruling:</strong> Suicide — based on a contested note found at the scene. Case closed November 1987. The ruling was disputed by the eldest daughter and now, fresh evidence has prompted this reinvestigation.</p>
+            <p><strong>Context:</strong> The victim had recently revised his will — disinheriting his eldest son Vikram and leaving the majority of the ₹40 lakh estate to a charitable trust. Three family members and two business associates were present in the haveli that night.</p>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="card-heading">The Iyer Family</div>
+          <div class="card-subheading">Background & Relations</div>
+          <div class="card-body">
+            <p>Raghavendra Iyer built his silk empire from a small loom in T. Narasipur. He married Savithri in 1955; she passed in 1979. Together they had three children: <strong>Vikram</strong> (eldest son, 34), <strong>Malathi</strong> (daughter, 30), and <strong>Suresh</strong> (youngest son, 26).</p>
+            <p>In the months before his death, Raghavendra had grown increasingly suspicious of financial irregularities at his emporium — specifically targeting Vikram, who managed the accounts. He had consulted his lawyer, <strong>Advocate Gopalakrishnan</strong>, just three days before his death.</p>
+            <p>Also present that night: <strong>Dr. Sujatha Reddy</strong>, Raghavendra's personal physician who made a house call earlier that evening, and <strong>Bhaskar Rao</strong>, a business rival turned associate.</p>
+          </div>
+        </div>
+
+        <div class="connections-hint" style="margin: 0 2rem 1.5rem;">
+          💡 <strong>Investigator's Hint:</strong> Start with the Crime Scene and Timeline to establish facts. Then cross-reference the Suspect profiles against the Witness Statements. The key contradiction is hiding in plain sight.
+        </div>
+      </div>
+
+      <!-- Crime Scene Panel -->
+      <div id="panel-crime-scene" class="content-panel">
+        <div class="paper-card">
+          <span class="stamp stamp-red">Evidence Sealed</span>
+          <div class="card-heading">Crime Scene Report</div>
+          <div class="card-subheading">Iyer Haveli · Upper Study · October 15, 1987</div>
+          <div class="card-body">
+            <p>The study is a large room approximately 20×15 feet, lined with teak bookshelves and a central writing desk. One window overlooking the inner courtyard was found <strong>unlatched</strong> — unusual, as the deceased was known to keep it bolted after dark.</p>
+            <p>Raghavendra was found slumped in his high-backed chair, right arm hanging limp. A half-consumed glass of warm milk sat on the desk, along with scattered papers and an open ledger. No signs of physical struggle were observed.</p>
+            <p>A handwritten note was found tucked beneath the desk blotter, reading: <em>"I have betrayed those who trusted me. There is no other way. — R.N.I."</em> — however, the handwriting has since been flagged as inconsistent with authenticated samples from the deceased.</p>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <div class="card-heading">Scene Observations</div>
+          <div class="card-subheading">Items of Interest</div>
+          <div class="card-body">
+            <p>🥛 <strong>Glass of milk</strong> — sent for toxicology. Arsenic compounds confirmed. The milk was prepared in the kitchen by the cook and brought up at 9:30 PM per routine. However, the cook states it was delivered to a <em>different</em> room initially.</p>
+            <p>📖 <strong>Open ledger</strong> — accounts for October 1987. Several entries circled in red ink, suggesting the deceased had been auditing the books that night. Pages 88–91 are missing.</p>
+            <p>🔒 <strong>Locked drawer</strong> — the bottom-right desk drawer was locked. When forced open during investigation, it contained a separate will dated October 10, 1987 — newer than the will filed with Advocate Gopalakrishnan.</p>
+            <p>🧤 <strong>Residue</strong> — a faint white powdery residue was found inside the rim of a teaspoon near the milk glass. Only partially tested in 1987.</p>
+            <p>🪟 <strong>Unlatched window</strong> — the window leads to a narrow balcony accessible via the rear staircase, which does not pass through the main hall. Anyone using it could enter or exit without being seen.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Panel -->
+      <div id="panel-timeline" class="content-panel">
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Timeline of Events</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">October 14–15, 1987</div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-entry">
+            <div class="timeline-time">6:30 PM · October 14</div>
+            <div class="timeline-event">Family Dinner at Iyer Haveli</div>
+            <div class="timeline-detail">All five household members dine together. Witnesses note tension between Raghavendra and Vikram. Suresh and Malathi both present. Cook Muniamma serves the meal.</div>
+          </div>
+          <div class="timeline-entry">
+            <div class="timeline-time">7:45 PM</div>
+            <div class="timeline-event">Dr. Sujatha Reddy Arrives</div>
+            <div class="timeline-detail">Monthly check-up. Examines Raghavendra in his bedroom. Prescribes a sleeping tonic — later found to have been only partially dispensed. She leaves at ~8:20 PM, or so she claims.</div>
+          </div>
+          <div class="timeline-entry">
+            <div class="timeline-time">8:30 PM</div>
+            <div class="timeline-event">Bhaskar Rao Visits</div>
+            <div class="timeline-detail">An unannounced visit. Bhaskar and Raghavendra meet privately in the downstairs sitting room for approximately 40 minutes. Their discussion is described as "heated" by valet Krishnamurthy.</div>
+          </div>
+          <div class="timeline-entry">
+            <div class="timeline-time">9:15 PM</div>
+            <div class="timeline-event">Raghavendra Retires to Study</div>
+            <div class="timeline-detail">Carries the ledger books upstairs. Asks Krishnamurthy not to be disturbed. Vikram seen pacing the downstairs corridor shortly afterward.</div>
+          </div>
+          <div class="timeline-entry">
+            <div class="timeline-time">9:30 PM</div>
+            <div class="timeline-event">Warm Milk Sent Up</div>
+            <div class="timeline-detail">Cook prepares nightly milk. Valet Krishnamurthy takes it upstairs. He claims Raghavendra accepted it and locked the door from inside. ⚠️ But Malathi states she saw the valet linger near the study for "longer than usual."</div>
+          </div>
+          <div class="timeline-entry">
+            <div class="timeline-time">10:00 PM – 1:00 AM</div>
+            <div class="timeline-event">Estimated Time of Death Window</div>
+            <div class="timeline-detail">Forensic post-mortem places death within this window. Arsenic poisoning from the milk would have taken 45–90 minutes to cause death.</div>
+          </div>
+          <div class="timeline-entry">
+            <div class="timeline-time">11:20 PM</div>
+            <div class="timeline-event">Sound Heard</div>
+            <div class="timeline-detail">Cook Muniamma (sleeping in ground-floor quarters) reports hearing footsteps on the rear staircase — the one leading to the study balcony. She assumed it was one of the family members.</div>
+          </div>
+          <div class="timeline-entry">
+            <div class="timeline-time">7:14 AM · October 15</div>
+            <div class="timeline-event">Body Discovered</div>
+            <div class="timeline-detail">Krishnamurthy knocks with morning tea. No response. Forces the door. Finds Raghavendra slumped at his desk, the ledger open, the note visible, the milk glass empty.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Suspects Panel -->
+      <div id="panel-suspects" class="content-panel">
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Suspects</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Five persons of interest · All present at Iyer Haveli that night</div>
+        </div>
+
+        <div class="suspect-grid">
+          <div class="suspect-card" onclick="openModal('vikram')">
+            <div class="suspect-avatar">👨</div>
+            <div class="clearfix">
+              <div class="suspect-name">Vikram Iyer</div>
+              <div class="suspect-role">Eldest Son · Age 34 · Accounts Manager</div>
+            </div>
+            <div class="suspect-detail">Ran the family business but was being systematically sidelined by his father. Recently discovered to have embezzled ₹3 lakh over 18 months — the same irregularities Raghavendra was auditing the night he died. Disinherited in the new will.</div>
+            <div><span class="motive-tag">Motive: Inheritance + Cover-Up</span><span class="alibi-tag">Alibi: In his room — unverified</span></div>
+          </div>
+
+          <div class="suspect-card" onclick="openModal('malathi')">
+            <div class="suspect-avatar">👩</div>
+            <div class="clearfix">
+              <div class="suspect-name">Malathi Iyer</div>
+              <div class="suspect-role">Daughter · Age 30 · Unmarried</div>
+            </div>
+            <div class="suspect-detail">The most devoted child, but recently denied permission to marry a man from a lower caste. Had a bitter argument with her father two days before his death. Sole witness to the valet lingering outside the study door.</div>
+            <div><span class="motive-tag">Motive: Resentment</span><span class="alibi-tag">Alibi: Own room · partially corroborated</span></div>
+          </div>
+
+          <div class="suspect-card" onclick="openModal('suresh')">
+            <div class="suspect-avatar">👦</div>
+            <div class="clearfix">
+              <div class="suspect-name">Suresh Iyer</div>
+              <div class="suspect-role">Youngest Son · Age 26 · Student</div>
+            </div>
+            <div class="suspect-detail">Charming and largely disinterested in business. Has gambling debts amounting to ₹80,000 — unbeknownst to his father. Was seen near the kitchen at 11 PM. Had access to the household rat poison kept in the store-room.</div>
+            <div><span class="motive-tag">Motive: Debt / Inheritance</span><span class="alibi-tag">Alibi: Kitchen · Cook unaware</span></div>
+          </div>
+
+          <div class="suspect-card" onclick="openModal('krishnamurthy')">
+            <div class="suspect-avatar">🧑</div>
+            <div class="clearfix">
+              <div class="suspect-name">Krishnamurthy</div>
+              <div class="suspect-role">Personal Valet · Age 52 · 20 yrs service</div>
+            </div>
+            <div class="suspect-detail">Unwaveringly loyal — or so it appeared. Was the last person to enter the study while Raghavendra was alive. Delivered the poisoned milk. Forensics found a faint arsenic trace on his left thumb, explained away as "cleaning powder" in 1987.</div>
+            <div><span class="motive-tag">Motive: Unknown — possibly paid</span><span class="alibi-tag">Alibi: Claims room after 9:45 PM</span></div>
+          </div>
+
+          <div class="suspect-card" onclick="openModal('sujatha')">
+            <div class="suspect-avatar">👩‍⚕️</div>
+            <div class="clearfix">
+              <div class="suspect-name">Dr. Sujatha Reddy</div>
+              <div class="suspect-role">Personal Physician · Age 44</div>
+            </div>
+            <div class="suspect-detail">Left at 8:20 PM — officially. But the gate watchman has no record of her departing. She had access to the deceased's medical history, knew his routines, and prescribed the sleeping tonic that was later partially interfered with. Old financial ties to Bhaskar Rao.</div>
+            <div><span class="motive-tag">Motive: Unclear — financial?</span><span class="alibi-tag">Alibi: Home — no corroboration</span></div>
+          </div>
+        </div>
+
+        <div class="connections-hint" style="margin-top:1.5rem;">
+          💡 <strong>Cross-reference:</strong> Compare each suspect's stated alibi against the timeline entries. At least two alibis contain direct contradictions with witness statements.
+        </div>
+      </div>
+
+      <!-- Witnesses Panel -->
+      <div id="panel-witnesses" class="content-panel">
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Witness Statements</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Recorded October 15–18, 1987 · Original transcripts</div>
+        </div>
+
+        <div class="paper-card">
+          <span class="stamp stamp-blue">Statement</span>
+          <div class="card-heading">Muniamma</div>
+          <div class="card-subheading">Cook · 22 years service · Age 48</div>
+          <div class="card-body">
+            <p><em>"I prepared the milk at nine-thirty as always. I put it on the tray myself. Krishnamurthy anna took it up. I went to my room and was sleeping by ten. Then — maybe at half past eleven, I hear footsteps. Heavy ones. On the back stairs. I thought it was Suresh anna coming back from outside. He sometimes uses the back way when he comes home late."</em></p>
+            <p><strong>⚠️ Key detail:</strong> Muniamma confirms the milk was placed directly on the tray by her and taken by Krishnamurthy. No one else handled it before delivery — unless it was tampered with en route or in the study itself.</p>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <span class="stamp stamp-blue">Statement</span>
+          <div class="card-heading">Rangaiah</div>
+          <div class="card-subheading">Gate Watchman · Age 61</div>
+          <div class="card-body">
+            <p><em>"Doctor madam came at seven-forty and left at... I wrote it down. Eight-twenty. No, wait — there was a problem with the register that night. The page got wet in the rain. I am not able to say exactly. But I think she left. I was not always at my post — I went to use the outhouse for some time."</em></p>
+            <p><strong>⚠️ Key detail:</strong> The watchman cannot confirm Dr. Reddy's departure time. His register entry is illegible. This creates a window in which she could have remained on the property until well after 10 PM.</p>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <span class="stamp stamp-blue">Statement</span>
+          <div class="card-heading">Advocate Gopalakrishnan</div>
+          <div class="card-subheading">Family Lawyer · Age 56</div>
+          <div class="card-body">
+            <p><em>"Raghavendra came to me on the 11th. He was very clear. He wanted to change the will — to leave the emporium to a charitable trust and provide small allowances only. He said Vikram had been stealing from him and he had proof. He planned to confront Vikram that weekend. He was not suicidal — he was angry. Very angry."</em></p>
+            <p><strong>⚠️ Key detail:</strong> Raghavendra had proof of embezzlement and intended to confront Vikram. The missing ledger pages 88–91 almost certainly contained this proof. Their disappearance is central to the case.</p>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <span class="stamp stamp-blue">Statement · 2024 (New)</span>
+          <div class="card-heading">Bhaskar Rao</div>
+          <div class="card-subheading">Business Associate · Now 79 · Interviewed 2024</div>
+          <div class="card-body">
+            <p><em>"I visited that night because Raghavendra had accused me of colluding with Vikram to move inventory without his knowledge. I was furious — I did nothing wrong. I told him so. We argued, yes. But I left at nine-fifteen. On my life, I left. And I can tell you — when I was in that sitting room, I saw Vikram in the hallway, on a telephone call, whispering. That is unusual — there was no phone in the hallway. He must have brought the handset from somewhere."</em></p>
+            <p><strong>⚠️ Key detail (NEW in 2024):</strong> Vikram was making a secret phone call at 8:45–9:00 PM. Phone records from 1987, recently digitised by BSNL archives, show a call from Iyer Haveli to Dr. Sujatha Reddy's clinic at 8:52 PM — lasting 11 minutes.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evidence Panel -->
+      <div id="panel-evidence" class="content-panel">
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Physical Evidence</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Catalogued items · Some re-tested in 2024</div>
+        </div>
+
+        <div class="evidence-grid">
+          <div class="evidence-card" onclick="clueFound('milk-glass')">
+            <div class="evidence-icon">🥛</div>
+            <div class="evidence-number">EXHIBIT 001</div>
+            <div class="evidence-title">Milk Glass (Residue)</div>
+            <div class="evidence-desc">2024 re-test: arsenic trioxide, same compound found in the Iyer store-room rat poison. Concentration: lethal at the volume consumed.</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('spoon')">
+            <div class="evidence-icon">🥄</div>
+            <div class="evidence-number">EXHIBIT 002</div>
+            <div class="evidence-title">Teaspoon Residue</div>
+            <div class="evidence-desc">White powdery residue on spoon rim. 2024 test: arsenic trioxide confirmed. The spoon matches the kitchen set — not a study item. Someone brought it up specifically.</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('note')">
+            <div class="evidence-icon">📄</div>
+            <div class="evidence-number">EXHIBIT 003</div>
+            <div class="evidence-title">"Suicide" Note</div>
+            <div class="evidence-desc">2024 forensic graphology: ink age inconsistent with 1987. Handwriting matches ~85% similarity to Raghavendra — not conclusive. Possibly traced or forged. Paper: different batch to desk stationery.</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('ledger')">
+            <div class="evidence-icon">📒</div>
+            <div class="evidence-number">EXHIBIT 004</div>
+            <div class="evidence-title">October Ledger</div>
+            <div class="evidence-desc">Pages 88–91 torn out cleanly. The stub shows no ink bleed — removed after the entries were made, not before. Red ink circles on page 87 point to Account Code V-14: Vikram's personal draws account.</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('new-will')">
+            <div class="evidence-icon">📜</div>
+            <div class="evidence-number">EXHIBIT 005</div>
+            <div class="evidence-title">Second Will (Oct 10)</div>
+            <div class="evidence-desc">Found in locked drawer. Dated Oct 10 — four days before death. Leaves estate to charitable trust. Witnessed by two neighbours. Supersedes the original 1982 will but was never filed with the court.</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('rat-poison')">
+            <div class="evidence-icon">☠️</div>
+            <div class="evidence-number">EXHIBIT 006</div>
+            <div class="evidence-title">Store-Room Rat Poison</div>
+            <div class="evidence-desc">Partial container of arsenic-based rat poison found in the ground-floor store-room. Amount missing: consistent with the dose found in the milk glass. Tin has multiple fingerprints — including a partial not yet identified.</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('window-latch')">
+            <div class="evidence-icon">🪟</div>
+            <div class="evidence-number">EXHIBIT 007</div>
+            <div class="evidence-title">Unlatched Study Window</div>
+            <div class="evidence-desc">Only the deceased would normally use this window latch — it required knowing the trick mechanism. A fine thread caught on the hinge consistent with a cotton saree or dhoti.</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('phone-records')">
+            <div class="evidence-icon">📞</div>
+            <div class="evidence-number">EXHIBIT 008 (NEW)</div>
+            <div class="evidence-title">BSNL Phone Records 1987</div>
+            <div class="evidence-desc">Digitised 2023. Confirm: 8:52 PM call from Iyer Haveli to Dr. Sujatha Reddy's clinic, duration 11 min. This call was never disclosed by Vikram or Dr. Reddy in their 1987 statements.</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('thumb-trace')">
+            <div class="evidence-icon">👍</div>
+            <div class="evidence-number">EXHIBIT 009</div>
+            <div class="evidence-title">Arsenic Trace (Valet's Thumb)</div>
+            <div class="evidence-desc">Original 1987 swab of Krishnamurthy's left thumb: arsenic positive. Dismissed as cleaning powder. Re-analysis 2024: the compound is identical to the milk sample — not cleaning product.</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('saree-thread')">
+            <div class="evidence-icon">🧵</div>
+            <div class="evidence-number">EXHIBIT 010 (NEW)</div>
+            <div class="evidence-title">Thread from Window Hinge</div>
+            <div class="evidence-desc">Silk thread. Mysore silk — consistent with a Kanjivaram saree. Colour: deep maroon. Dr. Sujatha Reddy was seen wearing a maroon saree that evening by Muniamma. Vikram's wife owns no such saree.</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('sleeping-tonic')">
+            <div class="evidence-icon">💊</div>
+            <div class="evidence-number">EXHIBIT 011</div>
+            <div class="evidence-title">Sleeping Tonic Bottle</div>
+            <div class="evidence-desc">Prescribed by Dr. Reddy. Found in Raghavendra's bedroom — half empty, but he had not yet taken any dose that night per the post-mortem (no phenobarbitol detected). Someone had pre-emptively opened the bottle. Why?</div>
+          </div>
+          <div class="evidence-card" onclick="clueFound('bank-transfer')">
+            <div class="evidence-icon">💰</div>
+            <div class="evidence-number">EXHIBIT 012 (NEW)</div>
+            <div class="evidence-title">Bank Transfer Record</div>
+            <div class="evidence-desc">October 13, 1987: ₹25,000 transferred from Vikram Iyer's account to a joint account held by "S. Reddy & V. Iyer." Account closed October 16, 1987 — the day after the murder. This account was unknown to investigators in 1987.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Documents Panel -->
+      <div id="panel-documents" class="content-panel">
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Documentary Evidence</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Letters · Records · Correspondence</div>
+        </div>
+
+        <div class="paper-card">
+          <span class="stamp stamp-blue">Letter</span>
+          <div class="card-heading">Letter from Raghavendra to Vikram</div>
+          <div class="card-subheading">Dated October 12, 1987 · Found in victim's study</div>
+          <div class="card-body">
+            <p style="font-style:italic; font-size:1.05rem;">"Vikram — I know about Account V-14. I know about the transfers. I have been patient too long. I am meeting Gopalakrishnan on Friday. After that, you will have no claims on this family or its wealth. Do not think I am unaware of your arrangements with others. I had hoped you would be honest with me. You were not. — Appa"</p>
+            <p style="margin-top:1rem; font-size:0.9rem; color:var(--faded);">Note: This letter was never sent — found sealed in the victim's drawer. Suggests he was building toward a confrontation, not contemplating suicide.</p>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <span class="stamp stamp-green">New Evidence</span>
+          <div class="card-heading">Insurance Policy</div>
+          <div class="card-subheading">LIC of India · Policy № 48-7741-MYS</div>
+          <div class="card-body">
+            <p>A ₹15 lakh life insurance policy taken out in 1979 — after Savithri's death. Beneficiary: originally Vikram Iyer. However, a beneficiary change form, dated October 10, 1987 (same day as the new will), was submitted to LIC naming the charitable trust.</p>
+            <p>⚠️ The form submission was never processed — it arrived at LIC offices on October 17, two days after the death. Under the original beneficiary designation, Vikram stood to collect ₹15 lakh. He did collect it in December 1987.</p>
+          </div>
+        </div>
+
+        <div class="paper-card">
+          <span class="stamp stamp-green">New Evidence</span>
+          <div class="card-heading">Dr. Reddy's Appointment Book · October 1987</div>
+          <div class="card-subheading">Sourced from Reddy estate archive · 2023</div>
+          <div class="card-body">
+            <p>Recovered from Dr. Sujatha Reddy's estate after her death in 2019. October 14, 1987 entry reads: <em>"Iyer — 8 PM. V's instructions. Prepare dose. Back stairs if required."</em></p>
+            <p>⚠️ "V's instructions" — interpreted as Vikram Iyer. "Back stairs" — matches the unlatched window and the rear staircase described in the crime scene report. "Prepare dose" — the nature of this dose is unclear. Sleeping tonic, or poison?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forensics Panel -->
+      <div id="panel-forensics" class="content-panel">
+        <div class="paper-card">
+          <span class="stamp stamp-red">Forensic Report</span>
+          <div class="card-heading">Post-Mortem Report</div>
+          <div class="card-subheading">Dr. K. Venkataraman, Mysore Medical College · October 15, 1987</div>
+          <div class="card-body">
+            <p><strong>Cause of death:</strong> Acute arsenic poisoning. Arsenic trioxide detected in stomach, liver, and blood at levels of 4.2 mg/kg body weight — significantly above the lethal threshold of ~1–2 mg/kg.</p>
+            <p><strong>Time of death:</strong> Estimated 10:30 PM – 12:30 AM based on body temperature, rigor mortis, and gastric contents.</p>
+            <p><strong>Method:</strong> Ingested. Arsenic was dissolved in warm liquid — consistent with the milk glass. Onset of symptoms approximately 45–60 minutes after ingestion.</p>
+            <p><strong>Other findings:</strong> No signs of external trauma. Mild phenobarbitol present — consistent with prior doses of sleeping medication. No defensive wounds. No signs of struggle.</p>
+          </div>
+        </div>
+        <div class="paper-card">
+          <span class="stamp stamp-green">2024 Update</span>
+          <div class="card-heading">Supplementary Forensic Analysis</div>
+          <div class="card-subheading">CFSL Bengaluru · March 2024</div>
+          <div class="card-body">
+            <p><strong>Note re-analysis:</strong> The paper of the "suicide note" is sourced from a different ream than the study stationery. Ink: iron gall, consistent with 1987. However, spectral analysis reveals the ink was applied in a single sitting — not with the casual pauses typical of emotionally-composed writing. Conclusion: likely prewritten or copied from a template.</p>
+            <p><strong>Thread analysis:</strong> Silk thread from window: Kanjivaram silk, maroon. Consistent with traditional South Indian formal wear. Microscopic examination shows the thread was snagged at waist height — consistent with someone reaching in to unlatch from outside.</p>
+            <p><strong>Fingerprint re-analysis:</strong> Partial print on rat poison tin: not matched to any family member or household staff. Matches unknown. ⚠️ Possible match pending against Dr. Reddy's prints (sourced from 2019 death registration).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes Panel -->
+      <div id="panel-notes" class="content-panel">
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Investigator's Notes</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Private working notes · Not part of official file</div>
+        </div>
+        <div class="noteboard">
+          <div class="noteboard-title">📝 Working Notes</div>
+          <textarea id="investigator-notes" placeholder="Write your observations, theories, and connections here...
+
+Example:
+- Vikram called Dr. Reddy at 8:52 PM — the same night as the murder
+- Dr. Reddy's appointment book mentions 'V's instructions' and 'back stairs'
+- Thread on window matches Dr. Reddy's saree
+- Bank transfer day before murder: Vikram → joint account with S. Reddy
+
+Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
+        </div>
+        <div class="connections-hint">
+          💡 <strong>Think about:</strong> Who had motive? Who had access? Who had the means (knowledge of arsenic + access to the poison)? And crucially — who is connected to whom? The phone records, the bank transfer, and the appointment book all point to a conspiracy between two people.
+        </div>
+      </div>
+
+      <!-- Accusation Panel -->
+      <div id="panel-accuse" class="content-panel">
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Make Your Accusation</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Choose carefully — you only get one chance</div>
+        </div>
+
+        <div class="paper-card">
+          <div class="card-heading">Final Deduction</div>
+          <div class="card-subheading">Summary of the case so far</div>
+          <div class="card-body">
+            <p>You have reviewed the crime scene, the timeline, the suspects, the witnesses, and the evidence. The case is rich with red herrings, lies, and one clear thread of truth.</p>
+            <p>Before you make your accusation, consider: the evidence points not just to a killer, but to a <em>conspiracy</em>. The primary killer physically administered the poison. But who orchestrated it?</p>
+            <p>Make your accusation below. Select the person you believe is the <strong>primary killer</strong> — the one who physically poisoned Raghavendra Narasimha Iyer on the night of October 14, 1987.</p>
+          </div>
+        </div>
+
+        <div class="accusation-section">
+          <div style="margin-bottom:1rem;">
+            <label style="font-family:'Special Elite',cursive; font-size:0.75rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase; display:block; margin-bottom:0.5rem;">Primary Killer</label>
+            <select class="accusation-select" id="suspect-select">
+              <option value="">— Select the killer —</option>
+              <option value="vikram">Vikram Iyer · Eldest Son</option>
+              <option value="malathi">Malathi Iyer · Daughter</option>
+              <option value="suresh">Suresh Iyer · Youngest Son</option>
+              <option value="krishnamurthy">Krishnamurthy · Valet</option>
+              <option value="sujatha">Dr. Sujatha Reddy · Physician</option>
+            </select>
+          </div>
+          <div style="margin-bottom:1rem;">
+            <label style="font-family:'Special Elite',cursive; font-size:0.75rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase; display:block; margin-bottom:0.5rem;">Method Used</label>
+            <select class="accusation-select" id="method-select">
+              <option value="">— Select the method —</option>
+              <option value="milk">Poison dissolved in the milk</option>
+              <option value="food">Poison mixed into food at dinner</option>
+              <option value="tonic">Poison injected into sleeping tonic</option>
+              <option value="direct">Forced to ingest poison directly</option>
+            </select>
+          </div>
+          <div style="margin-bottom:1rem;">
+            <label style="font-family:'Special Elite',cursive; font-size:0.75rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase; display:block; margin-bottom:0.5rem;">Accomplice (if any)</label>
+            <select class="accusation-select" id="accomplice-select">
+              <option value="none">— No accomplice —</option>
+              <option value="vikram">Vikram Iyer</option>
+              <option value="malathi">Malathi Iyer</option>
+              <option value="suresh">Suresh Iyer</option>
+              <option value="krishnamurthy">Krishnamurthy</option>
+              <option value="sujatha">Dr. Sujatha Reddy</option>
+            </select>
+          </div>
+          <button class="accuse-btn" onclick="makeAccusation()">⚖ File Formal Accusation</button>
+        </div>
+      </div>
+
+    </div> <!-- end main-content -->
+
+    <!-- Right Panel -->
+    <div class="right-panel">
+      <div class="panel-widget">
+        <div class="widget-title">📊 Case Progress</div>
+        <div class="progress-label">Evidence Reviewed</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+        </div>
+        <div style="font-family:'Special Elite',cursive; font-size:0.8rem; color:var(--paper); text-align:right;" id="progress-text">0 / 12</div>
+      </div>
+
+      <div class="panel-widget">
+        <div class="widget-title">🔑 Key Clues Found</div>
+        <div id="clue-list">
+          <div style="font-family:'Crimson Text',serif; font-size:0.85rem; color:rgba(245,237,216,0.3); font-style:italic;">No clues catalogued yet. Review the Evidence section.</div>
+        </div>
+      </div>
+
+      <div class="panel-widget">
+        <div class="widget-title">🔗 Connections</div>
+        <div class="connections-hint" style="font-size:0.8rem; margin-bottom:0;">
+          Vikram ←→ Phone Call ←→ Dr. Reddy<br>
+          Vikram ←→ Bank Transfer ←→ Dr. Reddy<br>
+          Dr. Reddy ←→ Back Stairs ←→ Study Window<br>
+          Thread ←→ Saree ←→ Dr. Reddy
+        </div>
+      </div>
+
+      <div class="panel-widget">
+        <div class="widget-title">🧭 Investigator Tips</div>
+        <div class="clue-item">
+          <div class="clue-dot"></div>
+          <div class="clue-text">Always verify alibis against multiple sources</div>
+        </div>
+        <div class="clue-item">
+          <div class="clue-dot"></div>
+          <div class="clue-text">Follow the money — bank records don't lie</div>
+        </div>
+        <div class="clue-item">
+          <div class="clue-dot"></div>
+          <div class="clue-text">Means + Motive + Opportunity = Killer</div>
+        </div>
+        <div class="clue-item">
+          <div class="clue-dot"></div>
+          <div class="clue-text">Who benefits most from the original will standing?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Result Screen -->
+<div id="result-screen">
+  <div class="result-paper" id="result-paper">
+    <span class="result-stamp" id="result-stamp"></span>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-body" id="result-body"></div>
+    <button class="replay-btn" onclick="restartGame()">↩ Review Case Files</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕ Close</button>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-subtitle" id="modal-subtitle"></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+  const suspects = {
+    vikram: {
+      title: "Vikram Iyer — Full Profile",
+      subtitle: "Suspect Interview · October 16, 1987",
+      body: `<p><strong>Interviewing Officer:</strong> Inspector Narayana Murthy, CID Mysore.</p>
+      <p><strong>Statement:</strong> "I was in my room from nine-fifteen onwards. I did not go to my father's study. We had our differences, yes, but I would never — this is monstrous."</p>
+      <p><strong>Contradiction 1:</strong> Bhaskar Rao places Vikram in the corridor at 8:45–9:00 PM, making a secret phone call. Vikram denied using the telephone that evening.</p>
+      <p><strong>Contradiction 2:</strong> Phone records confirm an 11-minute call to Dr. Sujatha Reddy at 8:52 PM. Vikram's motive — embezzlement cover-up + ₹15 lakh insurance — is the strongest in the case.</p>
+      <p><strong>Psychological note:</strong> Vikram shows no grief during interview. Asks about will status within the first ten minutes. Requests to speak to the family lawyer immediately after.</p>
+      <p><strong>2024 development:</strong> Bank transfer of ₹25,000 to joint account with Dr. Reddy on October 13th, one day before murder. Account closed October 16th. Vikram's current whereabouts: Chennai. Has not responded to 2024 CID summons.</p>`
+    },
+    malathi: {
+      title: "Malathi Iyer — Full Profile",
+      subtitle: "Suspect Interview · October 16, 1987",
+      body: `<p><strong>Statement:</strong> "I loved my father. Yes, we fought about Srinivas — about my marriage. But what daughter hasn't argued with her father? I was in my room crying that night. I heard nothing."</p>
+      <p><strong>Note:</strong> Malathi is the one who reported seeing Krishnamurthy lingering at the study door after delivering the milk — a key observation. She is cooperative and visibly distressed.</p>
+      <p><strong>Assessment:</strong> While she had motive (resentment over marriage refusal), she had no access to the poison and no knowledge of arsenic compounds. Her account is broadly consistent across all interviews. Unlikely to be primary perpetrator.</p>
+      <p><strong>2024:</strong> Malathi initiated this reinvestigation. She hired a private investigator in 2020 who uncovered the appointment book and bank records. She is the reason this case was reopened.</p>`
+    },
+    suresh: {
+      title: "Suresh Iyer — Full Profile",
+      subtitle: "Suspect Interview · October 16, 1987",
+      body: `<p><strong>Statement:</strong> "I was in the kitchen around eleven, getting water. I couldn't sleep. I didn't go near the study. I didn't even know about the will changes."</p>
+      <p><strong>Gambling debts:</strong> ₹80,000 owed to a moneylender in Bengaluru. His father did not know. Under the original will, Suresh inherits equally with siblings — giving him motive, but a weaker one than Vikram.</p>
+      <p><strong>Kitchen presence at 11 PM:</strong> Muniamma heard footsteps at 11:20 PM on the rear staircase — not the kitchen. If Suresh was in the kitchen, who was on the stairs?</p>
+      <p><strong>Assessment:</strong> Suresh had opportunity and some motive, but no apparent connection to the poison preparation or the forged note. He is a lesser suspect — possibly a distraction.</p>`
+    },
+    krishnamurthy: {
+      title: "Krishnamurthy — Full Profile",
+      subtitle: "Valet · Suspect Interview · October 15, 1987",
+      body: `<p><strong>Statement:</strong> "I served Iyer sahib for twenty years. He was like family to me. I took the milk up, he took it, he said goodnight, and I went to my room. I touched nothing."</p>
+      <p><strong>Arsenic on thumb:</strong> The trace arsenic on his left thumb was explained as cleaning powder in 1987. 2024 re-analysis shows it is arsenic trioxide — identical to the compound in the milk. He almost certainly handled the poison.</p>
+      <p><strong>Malathi's observation:</strong> Malathi saw him lingering near the study door for longer than it would take to hand over a glass. Did he administer the poison himself, or was he coerced/paid?</p>
+      <p><strong>Assessment:</strong> Krishnamurthy was the delivery mechanism — either as a paid accomplice who added poison to the milk en route, or as an unknowing carrier whose milk was tampered with before or after he took it upstairs. He died in 1999. Cannot be further questioned.</p>`
+    },
+    sujatha: {
+      title: "Dr. Sujatha Reddy — Full Profile",
+      subtitle: "Suspect Interview · October 17, 1987",
+      body: `<p><strong>Statement:</strong> "I examined Mr. Iyer at eight o'clock, gave him his prescription, and left by eight-twenty. I was home by nine. I have nothing more to say."</p>
+      <p><strong>Departure unverified:</strong> The watchman cannot confirm she left. The gate register entry is illegible due to rain. She could have remained until well after 10 PM.</p>
+      <p><strong>Appointment book (2024):</strong> Her own handwriting: "V's instructions. Prepare dose. Back stairs if required." This is the most damning piece of evidence in the entire case.</p>
+      <p><strong>Thread evidence:</strong> Maroon Kanjivaram silk thread caught on the study window hinge — consistent with the saree she was seen wearing that evening. Height of the snag: waist-level. She reached in to unlatch the window from outside.</p>
+      <p><strong>Financial motive:</strong> Joint bank account with Vikram. ₹25,000 received October 13th. She was being paid.</p>
+      <p><strong>Assessment:</strong> Dr. Sujatha Reddy is the primary killer. She re-entered Iyer Haveli via the back stairs, unlatched the study window from outside, entered the study under a pretext or while Raghavendra was momentarily distracted, and administered arsenic to the milk — either directly or via the spoon. She acted on Vikram's instructions and was paid for it. She died in 2019, never charged.</p>`
+    }
+  };
+
+  const clueDetails = {
+    'milk-glass': '🥛 Poisoned milk glass — arsenic trioxide confirmed (2024)',
+    'spoon': '🥄 Teaspoon with arsenic residue — brought from kitchen specifically',
+    'note': '📄 Suicide note — forensically inconsistent, likely forged',
+    'ledger': '📒 Ledger pages 88-91 torn out — concealing Vikram\'s embezzlement',
+    'new-will': '📜 Second will (Oct 10) — disinheriting Vikram, never filed',
+    'rat-poison': '☠️ Store-room arsenic — partial print on tin, unidentified',
+    'window-latch': '🪟 Unlatched window — silk thread caught on hinge',
+    'phone-records': '📞 BSNL records — Vikram called Dr. Reddy at 8:52 PM',
+    'thumb-trace': '👍 Valet\'s thumb — arsenic trioxide, same compound as milk',
+    'saree-thread': '🧵 Maroon Kanjivaram thread — matches Dr. Reddy\'s saree',
+    'sleeping-tonic': '💊 Sleeping tonic — opened but never taken by victim',
+    'bank-transfer': '💰 Bank transfer Oct 13 — Vikram paid Dr. Reddy ₹25,000'
+  };
+
+  let foundClues = new Set();
+
+  function startGame() {
+    document.getElementById('title-screen').style.display = 'none';
+    document.getElementById('game-screen').style.display = 'flex';
+    document.getElementById('game-screen').style.flexDirection = 'column';
+  }
+
+  function showPanel(id) {
+    document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const panel = document.getElementById('panel-' + id);
+    if (panel) panel.classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function openModal(suspect) {
+    const data = suspects[suspect];
+    document.getElementById('modal-title').innerHTML = data.title;
+    document.getElementById('modal-subtitle').innerHTML = data.subtitle;
+    document.getElementById('modal-body').innerHTML = data.body;
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  function clueFound(clueId) {
+    if (!foundClues.has(clueId)) {
+      foundClues.add(clueId);
+      updateClueList();
+    }
+    // Flash feedback
+    const cards = document.querySelectorAll('.evidence-card');
+    cards.forEach(card => {
+      if (card.getAttribute('onclick') && card.getAttribute('onclick').includes(clueId)) {
+        card.style.background = '#e8f0e0';
+        setTimeout(() => { card.style.background = ''; }, 600);
+      }
+    });
+  }
+
+  function updateClueList() {
+    const count = foundClues.size;
+    document.getElementById('clue-count').textContent = count;
+    const pct = (count / 12) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = count + ' / 12';
+
+    const listEl = document.getElementById('clue-list');
+    listEl.innerHTML = '';
+    foundClues.forEach(id => {
+      const div = document.createElement('div');
+      div.className = 'clue-item';
+      div.innerHTML = `<div class="clue-dot" style="background:var(--accent)"></div><div class="clue-text">${clueDetails[id]}</div>`;
+      listEl.appendChild(div);
+    });
+  }
+
+  function makeAccusation() {
+    const suspect = document.getElementById('suspect-select').value;
+    const method = document.getElementById('method-select').value;
+    const accomplice = document.getElementById('accomplice-select').value;
+
+    if (!suspect || !method) {
+      alert('Please select both a suspect and a method.');
+      return;
+    }
+
+    document.getElementById('game-screen').style.display = 'none';
+    document.getElementById('result-screen').style.display = 'flex';
+
+    const paper = document.getElementById('result-paper');
+    const stamp = document.getElementById('result-stamp');
+    const title = document.getElementById('result-title');
+    const body = document.getElementById('result-body');
+
+    const correctKiller = 'sujatha';
+    const correctMethod = 'milk';
+    const correctAccomplice = 'vikram';
+
+    const killerCorrect = suspect === correctKiller;
+    const methodCorrect = method === correctMethod;
+    const accompliceCorrect = accomplice === correctAccomplice;
+    const fullyCorrect = killerCorrect && methodCorrect && accompliceCorrect;
+
+    if (fullyCorrect) {
+      paper.className = 'result-paper result-correct';
+      stamp.textContent = '✓';
+      stamp.style.color = '#2c4a1e';
+      title.textContent = 'Case Solved!';
+      body.innerHTML = `<p>Exceptional work, Inspector. You have cracked the Mysore Inheritance.</p>
+      <p><strong>Dr. Sujatha Reddy</strong> entered Iyer Haveli a second time via the rear staircase, unlatched the study window from outside using the balcony, slipped inside, and dissolved arsenic trioxide into Raghavendra's milk glass — either directly or while Krishnamurthy briefly left the tray unattended on the landing.</p>
+      <p>She acted on <strong>Vikram Iyer's</strong> instructions, paid ₹25,000 via their secret joint account the day before the murder. Vikram's motive was the imminent exposure of his ₹3 lakh embezzlement and his disinheritance — and the ₹15 lakh insurance policy he ultimately collected.</p>
+      <p><em>Justice was never formally served — both are now deceased. But the record is corrected.</em></p>`;
+    } else if (killerCorrect) {
+      paper.className = 'result-paper result-correct';
+      stamp.textContent = '◑';
+      stamp.style.color = '#b8860b';
+      title.textContent = 'Partially Correct';
+      body.innerHTML = `<p>You identified the right killer — <strong>Dr. Sujatha Reddy</strong> — but missed some details.</p>
+      ${!methodCorrect ? '<p>The poison was dissolved in the <strong>warm milk glass</strong> — not another method.</p>' : ''}
+      ${!accompliceCorrect ? '<p>Her accomplice was <strong>Vikram Iyer</strong>, who orchestrated and paid for the murder to cover his embezzlement.</p>' : ''}
+      <p>Review the phone records, bank transfer, and Dr. Reddy's appointment book for the full picture.</p>`;
+    } else {
+      paper.className = 'result-paper result-wrong';
+      stamp.textContent = '✗';
+      stamp.style.color = '#8b0000';
+      title.textContent = 'Incorrect Accusation';
+      body.innerHTML = `<p>Your accusation could not be supported by the evidence, Inspector.</p>
+      <p>The true killer is still at large in the records. Look more carefully at the physical evidence — particularly the phone records, the thread on the window, and Dr. Reddy's appointment book entry from October 14th.</p>
+      <p><em>Hint: Two people conspired. One paid. One poisoned. Follow the money and the saree thread.</em></p>`;
+    }
+  }
+
+  function restartGame() {
+    document.getElementById('result-screen').style.display = 'none';
+    document.getElementById('game-screen').style.display = 'flex';
+    showPanel('overview');
+  }
+
+  // Close modal on overlay click
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
