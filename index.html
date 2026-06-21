@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes, maximum-scale=5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1a0f00">
 <title>Cold Case: The Mysore Inheritance</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Special+Elite&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -20,15 +23,17 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html { scroll-behavior: smooth; }
+
   body {
     background: var(--ink);
     font-family: 'Crimson Text', serif;
     min-height: 100vh;
     overflow-x: hidden;
     cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><circle cx='10' cy='10' r='4' fill='%238b2500'/></svg>") 10 10, auto;
+    touch-action: manipulation;
   }
 
-  /* Textured background */
   body::before {
     content: '';
     position: fixed;
@@ -46,7 +51,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 1rem;
     position: relative;
   }
 
@@ -54,7 +59,7 @@
     background: var(--paper);
     max-width: 720px;
     width: 100%;
-    padding: 4rem 3rem;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
     position: relative;
     box-shadow: 0 0 60px rgba(139,37,0,0.5), 0 0 120px rgba(0,0,0,0.8);
     border: 1px solid var(--gold);
@@ -69,7 +74,6 @@
     pointer-events: none;
   }
 
-  /* Aged paper texture */
   .title-paper::after {
     content: '';
     position: absolute;
@@ -84,7 +88,7 @@
 
   .case-label {
     font-family: 'Special Elite', cursive;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     letter-spacing: 0.4em;
     color: var(--faded);
     text-align: center;
@@ -97,7 +101,7 @@
     border: 3px solid var(--stamp-red);
     color: var(--stamp-red);
     font-family: 'Special Elite', cursive;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     letter-spacing: 0.3em;
     padding: 0.2rem 0.8rem;
     transform: rotate(-2deg);
@@ -110,7 +114,7 @@
 
   .game-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-size: clamp(1.8rem, 5vw, 3.8rem);
     font-weight: 900;
     color: var(--ink);
     text-align: center;
@@ -123,40 +127,18 @@
   .game-subtitle {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-size: clamp(0.9rem, 2.5vw, 1.4rem);
     color: var(--rust);
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     position: relative;
     z-index: 1;
-  }
-
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 1.5rem 0;
-    position: relative;
-    z-index: 1;
-  }
-  .divider-line { flex: 1; height: 1px; background: var(--gold); opacity: 0.5; }
-  .divider-icon { color: var(--gold); font-size: 1rem; }
-
-  .case-intro {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    color: var(--faded);
-    text-align: center;
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 1;
-    font-style: italic;
   }
 
   .victim-photo-placeholder {
-    width: 120px;
-    height: 160px;
-    margin: 0 auto 2rem;
+    width: 100px;
+    height: 130px;
+    margin: 0 auto 1.5rem;
     background: var(--aged);
     border: 2px solid var(--gold);
     display: flex;
@@ -169,37 +151,43 @@
   }
 
   .victim-photo-placeholder svg { opacity: 0.4; }
+  
   .photo-caption {
     font-family: 'Special Elite', cursive;
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     color: var(--faded);
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
     text-align: center;
     letter-spacing: 0.1em;
+    line-height: 1.3;
   }
 
   .start-btn {
     display: block;
     width: 100%;
-    padding: 1rem 2rem;
+    padding: 1rem;
     background: var(--ink);
     color: var(--paper);
     border: none;
     font-family: 'Special Elite', cursive;
-    font-size: 1rem;
+    font-size: 0.95rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     cursor: pointer;
+    touch-action: manipulation;
     transition: all 0.3s;
     position: relative;
     z-index: 1;
     margin-top: 1rem;
+    border-radius: 4px;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 48px;
   }
 
-  .start-btn:hover {
+  .start-btn:active {
     background: var(--rust);
     box-shadow: 0 0 20px rgba(139,37,0,0.6);
-    transform: translateY(-2px);
+    transform: scale(0.98);
   }
 
   /* ====== GAME SCREEN ====== */
@@ -209,36 +197,64 @@
     flex-direction: column;
   }
 
+  /* Hamburger Menu */
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--paper);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 101;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .hamburger.active span {
+    display: block;
+    height: 2px;
+    background: var(--paper);
+    margin: 5px 0;
+    transition: 0.3s;
+  }
+
   /* Top bar */
   .game-header {
     background: var(--ink);
     border-bottom: 2px solid var(--gold);
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.5rem;
+    min-height: 56px;
   }
 
   .game-header-title {
     font-family: 'Playfair Display', serif;
     color: var(--paper);
-    font-size: 1.1rem;
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
     font-style: italic;
+    flex: 1;
   }
 
   .header-stats {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     align-items: center;
+    font-size: 0.75rem;
+    flex-wrap: wrap;
   }
 
   .stat-item {
     font-family: 'Special Elite', cursive;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     letter-spacing: 0.15em;
     color: var(--gold);
+    white-space: nowrap;
   }
 
   .stat-value { color: var(--paper); }
@@ -258,6 +274,7 @@
     border-right: 1px solid rgba(184,134,11,0.3);
     overflow-y: auto;
     padding: 1rem 0;
+    transition: transform 0.3s ease;
   }
 
   .sidebar-section {
@@ -281,8 +298,9 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.6rem 0.75rem;
     cursor: pointer;
+    touch-action: manipulation;
     transition: all 0.2s;
     border-left: 2px solid transparent;
     font-family: 'Crimson Text', serif;
@@ -290,10 +308,12 @@
     color: rgba(245,237,216,0.6);
     border-radius: 0 4px 4px 0;
     margin-bottom: 0.1rem;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 44px;
   }
 
-  .nav-item:hover { 
-    background: rgba(184,134,11,0.1);
+  .nav-item:active { 
+    background: rgba(184,134,11,0.15);
     color: var(--paper);
     border-left-color: var(--gold);
   }
@@ -309,28 +329,19 @@
     cursor: not-allowed;
   }
 
-  .nav-icon { font-size: 0.9rem; width: 16px; }
-
-  .unlock-badge {
-    margin-left: auto;
-    font-size: 0.65rem;
-    background: rgba(139,37,0,0.4);
-    color: #ff6b6b;
-    padding: 0.1rem 0.35rem;
-    border-radius: 2px;
-    font-family: 'Special Elite', cursive;
-  }
+  .nav-icon { font-size: 1rem; width: 18px; }
 
   /* Main content */
   .main-content {
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     background: #0d0700;
     padding: 0;
   }
 
   .content-panel {
     display: none;
-    padding: 2rem;
+    padding: clamp(1.5rem, 4vw, 2rem);
     animation: fadeIn 0.3s ease;
   }
 
@@ -341,7 +352,7 @@
   /* Paper card */
   .paper-card {
     background: var(--paper);
-    padding: 2rem;
+    padding: clamp(1.5rem, 4vw, 2rem);
     margin-bottom: 1.5rem;
     position: relative;
     box-shadow: 4px 4px 20px rgba(0,0,0,0.5);
@@ -358,7 +369,7 @@
 
   .card-heading {
     font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
     color: var(--ink);
     margin-bottom: 0.25rem;
     font-weight: 700;
@@ -366,7 +377,7 @@
 
   .card-subheading {
     font-family: 'Special Elite', cursive;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     letter-spacing: 0.25em;
     color: var(--faded);
     margin-bottom: 1.25rem;
@@ -386,7 +397,7 @@
     top: 1.25rem;
     right: 1.25rem;
     font-family: 'Special Elite', cursive;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     letter-spacing: 0.2em;
     padding: 0.25rem 0.6rem;
     border: 2px solid;
@@ -401,28 +412,33 @@
   /* Evidence grid */
   .evidence-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(clamp(180px, 45vw, 240px), 1fr));
     gap: 1rem;
   }
 
   .evidence-card {
     background: var(--aged);
     border: 1px solid rgba(107,90,58,0.4);
-    padding: 1.25rem;
+    padding: 1rem;
     cursor: pointer;
+    touch-action: manipulation;
     transition: all 0.25s;
     position: relative;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    -webkit-tap-highlight-color: transparent;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
   }
 
-  .evidence-card:hover {
+  .evidence-card:active {
     transform: translateY(-3px) rotate(0.5deg);
     box-shadow: 4px 6px 15px rgba(0,0,0,0.4);
   }
 
   .evidence-number {
     font-family: 'Special Elite', cursive;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: var(--faded);
     letter-spacing: 0.2em;
     margin-bottom: 0.4rem;
@@ -430,26 +446,27 @@
 
   .evidence-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--ink);
     font-weight: 700;
     margin-bottom: 0.4rem;
   }
 
   .evidence-desc {
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     color: var(--faded);
     line-height: 1.6;
+    flex: 1;
   }
 
   .evidence-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
 
   /* Timeline */
-  .timeline { position: relative; padding-left: 2rem; }
+  .timeline { position: relative; padding-left: 1.5rem; }
   .timeline::before {
     content: '';
     position: absolute;
-    left: 0.6rem;
+    left: 0.3rem;
     top: 0;
     bottom: 0;
     width: 1px;
@@ -458,25 +475,26 @@
 
   .timeline-entry {
     position: relative;
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
     background: var(--paper);
-    padding: 1.25rem;
+    padding: 1rem;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.4);
     border-left: 3px solid var(--gold);
+    font-size: 0.95rem;
   }
 
   .timeline-entry::before {
     content: '◆';
     position: absolute;
-    left: calc(-2rem - 0.3rem);
-    top: 1.1rem;
-    font-size: 0.6rem;
+    left: calc(-1.5rem - 0.3rem);
+    top: 0.8rem;
+    font-size: 0.5rem;
     color: var(--gold);
   }
 
   .timeline-time {
     font-family: 'Special Elite', cursive;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--rust);
     letter-spacing: 0.15em;
     margin-bottom: 0.25rem;
@@ -484,63 +502,65 @@
 
   .timeline-event {
     font-family: 'Playfair Display', serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--ink);
     font-weight: 700;
     margin-bottom: 0.4rem;
   }
 
-  .timeline-detail { font-size: 0.9rem; color: var(--faded); line-height: 1.6; }
+  .timeline-detail { font-size: 0.85rem; color: var(--faded); line-height: 1.6; }
 
   /* Suspect cards */
   .suspect-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(clamp(260px, 100%, 280px), 1fr));
     gap: 1.5rem;
   }
 
   .suspect-card {
     background: var(--paper);
     border: 1px solid rgba(107,90,58,0.3);
-    padding: 1.5rem;
+    padding: 1.25rem;
     position: relative;
     box-shadow: 3px 3px 15px rgba(0,0,0,0.4);
     transition: transform 0.2s;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .suspect-card:hover { transform: translateY(-2px); }
+  .suspect-card:active { transform: translateY(-2px); }
 
   .suspect-avatar {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     background: var(--aged);
     border: 2px solid var(--gold);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
     float: left;
-    margin-right: 1rem;
+    margin-right: 0.75rem;
   }
 
   .suspect-name {
     font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--ink);
   }
 
   .suspect-role {
     font-family: 'Special Elite', cursive;
-    font-size: 0.68rem;
+    font-size: 0.6rem;
     letter-spacing: 0.2em;
     color: var(--faded);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     text-transform: uppercase;
   }
 
-  .suspect-detail { font-size: 0.9rem; color: #3a2a00; line-height: 1.65; }
+  .suspect-detail { font-size: 0.85rem; color: #3a2a00; line-height: 1.6; }
   .clearfix::after { content: ''; display: block; clear: both; }
 
   .motive-tag {
@@ -549,10 +569,10 @@
     border: 1px solid rgba(139,37,0,0.3);
     color: var(--rust);
     font-family: 'Special Elite', cursive;
-    font-size: 0.65rem;
-    padding: 0.15rem 0.5rem;
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
     letter-spacing: 0.15em;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     text-transform: uppercase;
   }
 
@@ -562,11 +582,11 @@
     border: 1px solid rgba(44,74,30,0.3);
     color: var(--accent);
     font-family: 'Special Elite', cursive;
-    font-size: 0.65rem;
-    padding: 0.15rem 0.5rem;
+    font-size: 0.6rem;
+    padding: 0.1rem 0.4rem;
     letter-spacing: 0.15em;
-    margin-top: 0.4rem;
-    margin-left: 0.4rem;
+    margin-top: 0.3rem;
+    margin-left: 0.3rem;
     text-transform: uppercase;
   }
 
@@ -574,15 +594,15 @@
   .noteboard {
     background: #1a0f00;
     border: 2px solid rgba(184,134,11,0.2);
-    min-height: 300px;
-    padding: 1.5rem;
+    min-height: 250px;
+    padding: 1.25rem;
     margin-bottom: 1.5rem;
   }
 
   .noteboard-title {
     font-family: 'Special Elite', cursive;
     color: var(--gold);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     margin-bottom: 1rem;
@@ -595,12 +615,13 @@
     border: none;
     color: var(--paper);
     font-family: 'Special Elite', cursive;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.8;
     resize: vertical;
-    min-height: 200px;
+    min-height: 180px;
     outline: none;
     letter-spacing: 0.05em;
+    -webkit-appearance: none;
   }
 
   .noteboard textarea::placeholder { color: rgba(245,237,216,0.25); }
@@ -608,7 +629,7 @@
   /* Accusation panel */
   .accusation-section {
     background: var(--paper);
-    padding: 2rem;
+    padding: 1.5rem;
     border: 2px solid var(--rust);
     position: relative;
     margin-top: 1rem;
@@ -617,20 +638,20 @@
   .accusation-section::before {
     content: 'MAKE YOUR ACCUSATION';
     position: absolute;
-    top: -0.75rem;
+    top: -0.6rem;
     left: 50%;
     transform: translateX(-50%);
     background: var(--paper);
     font-family: 'Special Elite', cursive;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     letter-spacing: 0.3em;
     color: var(--rust);
-    padding: 0 1rem;
+    padding: 0 0.75rem;
   }
 
   .accusation-select {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem;
     background: var(--aged);
     border: 1px solid var(--gold);
     font-family: 'Crimson Text', serif;
@@ -638,10 +659,14 @@
     color: var(--ink);
     margin-bottom: 1rem;
     cursor: pointer;
+    -webkit-appearance: none;
     appearance: none;
     background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M0 0l6 8 6-8z' fill='%236b5a3a'/></svg>");
     background-repeat: no-repeat;
-    background-position: right 1rem center;
+    background-position: right 0.75rem center;
+    padding-right: 2.5rem;
+    border-radius: 4px;
+    min-height: 48px;
   }
 
   .accuse-btn {
@@ -655,23 +680,29 @@
     letter-spacing: 0.3em;
     text-transform: uppercase;
     cursor: pointer;
+    touch-action: manipulation;
     transition: all 0.3s;
+    border-radius: 4px;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 48px;
   }
 
-  .accuse-btn:hover { background: #6b1a00; box-shadow: 0 0 15px rgba(139,37,0,0.5); }
+  .accuse-btn:active { background: #6b1a00; box-shadow: 0 0 15px rgba(139,37,0,0.5); }
 
   /* Right panel */
   .right-panel {
     background: #120900;
     border-left: 1px solid rgba(184,134,11,0.3);
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 1rem;
+    transition: transform 0.3s ease;
   }
 
   .panel-widget {
     background: #1a0f00;
     border: 1px solid rgba(184,134,11,0.2);
-    padding: 1rem;
+    padding: 0.9rem;
     margin-bottom: 1rem;
   }
 
@@ -692,21 +723,22 @@
     gap: 0.5rem;
     align-items: flex-start;
     margin-bottom: 0.5rem;
-    padding: 0.4rem;
+    padding: 0.35rem;
     background: rgba(245,237,216,0.04);
     border-left: 2px solid transparent;
     transition: all 0.2s;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .clue-item:hover { border-left-color: var(--gold); background: rgba(245,237,216,0.08); }
+  .clue-item:active { border-left-color: var(--gold); background: rgba(245,237,216,0.08); }
 
   .clue-dot { 
-    width: 6px; height: 6px; border-radius: 50%; 
-    background: var(--rust); margin-top: 0.4rem; flex-shrink: 0; 
+    width: 5px; height: 5px; border-radius: 50%; 
+    background: var(--rust); margin-top: 0.3rem; flex-shrink: 0; 
   }
 
-  .clue-text { font-family: 'Crimson Text', serif; font-size: 0.85rem; color: rgba(245,237,216,0.7); line-height: 1.5; }
+  .clue-text { font-family: 'Crimson Text', serif; font-size: 0.8rem; color: rgba(245,237,216,0.7); line-height: 1.4; }
 
   .progress-bar-wrap {
     background: rgba(184,134,11,0.15);
@@ -725,7 +757,7 @@
 
   .progress-label {
     font-family: 'Special Elite', cursive;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: rgba(184,134,11,0.7);
     margin-bottom: 0.25rem;
   }
@@ -740,6 +772,8 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .modal-overlay.open { display: flex; }
@@ -748,10 +782,11 @@
     background: var(--paper);
     max-width: 600px;
     width: 100%;
-    padding: 2.5rem;
+    padding: 2rem 1.5rem;
     position: relative;
     box-shadow: 0 0 80px rgba(139,37,0,0.6);
     animation: modalIn 0.3s ease;
+    border-radius: 8px;
     max-height: 85vh;
     overflow-y: auto;
   }
@@ -762,16 +797,20 @@
     position: absolute;
     top: 1rem; right: 1rem;
     background: none; border: none;
-    font-size: 1.2rem; cursor: pointer;
+    font-size: 1.5rem; cursor: pointer;
     color: var(--faded);
     font-family: 'Special Elite', cursive;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem;
   }
 
-  .modal-close:hover { color: var(--rust); }
+  .modal-close:active { color: var(--rust); }
 
   .modal-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
     font-weight: 700;
     color: var(--ink);
     margin-bottom: 0.25rem;
@@ -779,16 +818,16 @@
 
   .modal-subtitle {
     font-family: 'Special Elite', cursive;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     letter-spacing: 0.25em;
     color: var(--faded);
     text-transform: uppercase;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .modal-body {
-    font-size: 1rem;
-    line-height: 1.85;
+    font-size: 0.95rem;
+    line-height: 1.8;
     color: #2a1a00;
   }
 
@@ -798,17 +837,18 @@
     min-height: 100vh;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 1rem;
   }
 
   .result-paper {
     background: var(--paper);
     max-width: 600px;
     width: 100%;
-    padding: 3rem;
+    padding: clamp(2rem, 4vw, 3rem);
     text-align: center;
     box-shadow: 0 0 80px rgba(139,37,0,0.6);
     position: relative;
+    border-radius: 8px;
   }
 
   .result-correct { border: 3px solid var(--accent); }
@@ -816,21 +856,21 @@
 
   .result-stamp {
     font-family: 'Special Elite', cursive;
-    font-size: 2rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
     display: block;
   }
 
   .result-title {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 5vw, 2rem);
     font-weight: 900;
     color: var(--ink);
     margin-bottom: 1rem;
   }
 
   .result-body {
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1.8;
     color: var(--faded);
     margin-bottom: 1.5rem;
@@ -847,16 +887,20 @@
     cursor: pointer;
     text-transform: uppercase;
     transition: all 0.3s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    border-radius: 4px;
+    min-height: 48px;
   }
 
-  .replay-btn:hover { background: var(--rust); }
+  .replay-btn:active { background: var(--rust); }
 
   /* Scrollbar */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #0a0500; }
   ::-webkit-scrollbar-thumb { background: rgba(184,134,11,0.4); border-radius: 3px; }
 
-  /* Red thread connections visual */
+  /* Connections hint */
   .connections-hint {
     background: rgba(139,37,0,0.08);
     border: 1px dashed rgba(139,37,0,0.3);
@@ -867,15 +911,292 @@
     color: rgba(139,37,0,0.8);
     letter-spacing: 0.1em;
     line-height: 1.6;
+    border-radius: 4px;
+  }
+
+  /* ====== MOBILE OPTIMIZATIONS ====== */
+  @media (max-width: 1024px) {
+    .game-layout {
+      grid-template-columns: 180px 1fr 200px;
+    }
+    .suspect-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 768px) {
-    .game-layout { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; height: auto; }
-    .sidebar { border-right: none; border-bottom: 1px solid rgba(184,134,11,0.3); display: flex; flex-wrap: wrap; padding: 0.5rem; }
-    .sidebar-section { margin-bottom: 0; }
-    .right-panel { border-left: none; border-top: 1px solid rgba(184,134,11,0.3); }
-    .main-content { height: 60vh; }
-    .game-layout { height: auto; }
+    /* Hide elements for mobile */
+    .hamburger {
+      display: block;
+    }
+
+    .game-layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      height: auto;
+    }
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 56px;
+      width: 100%;
+      max-width: 280px;
+      height: calc(100vh - 56px);
+      background: #120900;
+      transform: translateX(-100%);
+      z-index: 99;
+      border-right: 1px solid rgba(184,134,11,0.3);
+      border-bottom: none;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 1rem 0;
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+      box-shadow: 2px 0 20px rgba(0,0,0,0.5);
+    }
+
+    .right-panel {
+      position: fixed;
+      right: 0;
+      top: 56px;
+      width: 100%;
+      max-width: 280px;
+      height: calc(100vh - 56px);
+      background: #120900;
+      transform: translateX(100%);
+      z-index: 99;
+      border-left: 1px solid rgba(184,134,11,0.3);
+      border-top: none;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .right-panel.open {
+      transform: translateX(0);
+      box-shadow: -2px 0 20px rgba(0,0,0,0.5);
+    }
+
+    .main-content {
+      height: auto;
+      min-height: calc(100vh - 56px);
+    }
+
+    .content-panel {
+      padding: 1.25rem;
+    }
+
+    .paper-card {
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .evidence-grid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .suspect-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .suspect-card {
+      padding: 1rem;
+    }
+
+    .suspect-avatar {
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+    }
+
+    .suspect-name {
+      font-size: 0.95rem;
+    }
+
+    .timeline-entry {
+      font-size: 0.9rem;
+      padding: 0.9rem;
+    }
+
+    .accusation-section {
+      padding: 1.25rem;
+    }
+
+    .noteboard {
+      min-height: 200px;
+      padding: 1rem;
+    }
+
+    .noteboard textarea {
+      min-height: 150px;
+      font-size: 0.85rem;
+    }
+
+    .accusation-select {
+      font-size: 0.95rem;
+      padding: 0.65rem;
+    }
+
+    .header-stats {
+      gap: 0.75rem;
+    }
+
+    .stat-item {
+      font-size: 0.65rem;
+    }
+
+    /* Hide title screens on mobile landscape */
+    @media (max-height: 600px) {
+      .victim-photo-placeholder {
+        width: 80px;
+        height: 100px;
+      }
+      .game-title {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      font-size: 15px;
+    }
+
+    #title-screen {
+      padding: 0.75rem;
+    }
+
+    .title-paper {
+      padding: 1.5rem 1rem;
+    }
+
+    .game-header {
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 0.5rem;
+      min-height: auto;
+    }
+
+    .game-header-title {
+      font-size: 0.9rem;
+    }
+
+    .header-stats {
+      width: 100%;
+      justify-content: space-around;
+    }
+
+    .content-panel {
+      padding: 1rem;
+    }
+
+    .paper-card {
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-heading {
+      font-size: 1.1rem;
+    }
+
+    .card-body {
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    .evidence-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    .evidence-card {
+      min-height: 150px;
+      padding: 0.75rem;
+    }
+
+    .evidence-title {
+      font-size: 0.85rem;
+    }
+
+    .evidence-desc {
+      font-size: 0.75rem;
+    }
+
+    .stamp {
+      font-size: 0.55rem;
+      padding: 0.15rem 0.4rem;
+    }
+
+    .suspect-card {
+      padding: 0.9rem;
+    }
+
+    .suspect-name {
+      font-size: 0.9rem;
+    }
+
+    .suspect-detail {
+      font-size: 0.8rem;
+    }
+
+    .timeline-entry {
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-box {
+      padding: 1.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+    }
+
+    .accusation-select {
+      font-size: 0.9rem;
+    }
+
+    .noteboard textarea {
+      min-height: 120px;
+      font-size: 0.8rem;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.55rem;
+    }
+
+    .panel-widget {
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .clue-text {
+      font-size: 0.75rem;
+    }
+  }
+
+  /* Landscape adjustments */
+  @media (max-height: 500px) {
+    .game-header {
+      min-height: 48px;
+      padding: 0.4rem 0.75rem;
+    }
+
+    .content-panel {
+      padding: 1rem;
+    }
+
+    .paper-card {
+      padding: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
   }
 </style>
 </head>
@@ -890,7 +1211,7 @@
         <span class="classified-stamp">Cold Case · Reopened 2024</span>
       </div>
       <div class="victim-photo-placeholder">
-        <svg width="50" height="60" viewBox="0 0 50 60">
+        <svg width="40" height="50" viewBox="0 0 50 60">
           <ellipse cx="25" cy="18" rx="14" ry="16" fill="#6b5a3a"/>
           <rect x="8" y="34" width="34" height="26" rx="4" fill="#6b5a3a"/>
         </svg>
@@ -900,28 +1221,24 @@
       <div class="game-subtitle">A Cold Case Mystery</div>
     </div>
 
-    <div class="divider">
-      <div class="divider-line"></div>
-      <div class="divider-icon">✦</div>
-      <div class="divider-line"></div>
-    </div>
+    <div style="margin:1rem 0; height:1px; background:var(--gold); opacity:0.5;"></div>
 
-    <div class="case-intro">
+    <div style="font-style:italic; font-size:0.95rem; line-height:1.8; color:var(--faded); text-align:center; margin-bottom:1.5rem; position:relative; z-index:1;">
       The night of October 14th, 1987. A wealthy silk merchant is found dead in his ancestral haveli in Mysore — poisoned, his estate contested, and the case quietly closed. Thirty-seven years later, new evidence has surfaced. You are a CID investigator tasked with finally solving the murder of <em>Raghavendra Narasimha Iyer</em>.
     </div>
 
-    <div style="display:flex; gap:1rem; text-align:center; margin-bottom:1.5rem; position:relative; z-index:1;">
-      <div style="flex:1; padding:0.75rem; background:var(--aged); border:1px solid rgba(107,90,58,0.3);">
-        <div style="font-family:'Special Elite',cursive; font-size:0.6rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase;">Suspects</div>
-        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--ink); font-weight:700;">5</div>
+    <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:1.5rem; position:relative; z-index:1;">
+      <div style="flex:1; min-width:80px; padding:0.75rem; background:var(--aged); border:1px solid rgba(107,90,58,0.3); text-align:center;">
+        <div style="font-family:'Special Elite',cursive; font-size:0.55rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase;">Suspects</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--ink); font-weight:700;">5</div>
       </div>
-      <div style="flex:1; padding:0.75rem; background:var(--aged); border:1px solid rgba(107,90,58,0.3);">
-        <div style="font-family:'Special Elite',cursive; font-size:0.6rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase;">Evidence</div>
-        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--ink); font-weight:700;">12</div>
+      <div style="flex:1; min-width:80px; padding:0.75rem; background:var(--aged); border:1px solid rgba(107,90,58,0.3); text-align:center;">
+        <div style="font-family:'Special Elite',cursive; font-size:0.55rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase;">Evidence</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--ink); font-weight:700;">12</div>
       </div>
-      <div style="flex:1; padding:0.75rem; background:var(--aged); border:1px solid rgba(107,90,58,0.3);">
-        <div style="font-family:'Special Elite',cursive; font-size:0.6rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase;">Witnesses</div>
-        <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--ink); font-weight:700;">6</div>
+      <div style="flex:1; min-width:80px; padding:0.75rem; background:var(--aged); border:1px solid rgba(107,90,58,0.3); text-align:center;">
+        <div style="font-family:'Special Elite',cursive; font-size:0.55rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase;">Witnesses</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--ink); font-weight:700;">6</div>
       </div>
     </div>
 
@@ -932,62 +1249,60 @@
 <!-- ====== GAME SCREEN ====== -->
 <div id="game-screen">
   <div class="game-header">
-    <div class="game-header-title">The Mysore Inheritance · Case № 1987-CR-0044</div>
-    <div class="header-stats">
-      <div class="stat-item">CLUES FOUND: <span class="stat-value" id="clue-count">0</span>/12</div>
-      <div class="stat-item">STATUS: <span class="stat-value" style="color:#e8c060;">ACTIVE INVESTIGATION</span></div>
-    </div>
+    <button class="hamburger" id="menu-btn" onclick="toggleMenu()">☰</button>
+    <div class="game-header-title">The Mysore Inheritance</div>
+    <button class="hamburger" id="panel-btn" onclick="togglePanel()" style="margin-left:auto;">◈</button>
   </div>
 
   <div class="game-layout">
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
       <div class="sidebar-section">
         <div class="sidebar-section-title">Case Files</div>
-        <div class="nav-item active" onclick="showPanel('overview')">
+        <div class="nav-item active" onclick="showPanel('overview'); closeMenus();">
           <span class="nav-icon">📋</span> Case Overview
         </div>
-        <div class="nav-item" onclick="showPanel('crime-scene')">
+        <div class="nav-item" onclick="showPanel('crime-scene'); closeMenus();">
           <span class="nav-icon">🔍</span> Crime Scene
         </div>
-        <div class="nav-item" onclick="showPanel('timeline')">
+        <div class="nav-item" onclick="showPanel('timeline'); closeMenus();">
           <span class="nav-icon">🕐</span> Timeline
         </div>
       </div>
       <div class="sidebar-section">
         <div class="sidebar-section-title">People</div>
-        <div class="nav-item" onclick="showPanel('suspects')">
+        <div class="nav-item" onclick="showPanel('suspects'); closeMenus();">
           <span class="nav-icon">👤</span> Suspects
         </div>
-        <div class="nav-item" onclick="showPanel('witnesses')">
+        <div class="nav-item" onclick="showPanel('witnesses'); closeMenus();">
           <span class="nav-icon">🗣</span> Statements
         </div>
       </div>
       <div class="sidebar-section">
         <div class="sidebar-section-title">Evidence</div>
-        <div class="nav-item" onclick="showPanel('evidence')">
+        <div class="nav-item" onclick="showPanel('evidence'); closeMenus();">
           <span class="nav-icon">🧪</span> Physical Evidence
         </div>
-        <div class="nav-item" onclick="showPanel('documents')">
+        <div class="nav-item" onclick="showPanel('documents'); closeMenus();">
           <span class="nav-icon">📜</span> Documents
         </div>
-        <div class="nav-item" onclick="showPanel('forensics')">
+        <div class="nav-item" onclick="showPanel('forensics'); closeMenus();">
           <span class="nav-icon">🔬</span> Forensic Report
         </div>
       </div>
       <div class="sidebar-section">
         <div class="sidebar-section-title">Investigation</div>
-        <div class="nav-item" onclick="showPanel('notes')">
+        <div class="nav-item" onclick="showPanel('notes'); closeMenus();">
           <span class="nav-icon">📝</span> My Notes
         </div>
-        <div class="nav-item" onclick="showPanel('accuse')">
+        <div class="nav-item" onclick="showPanel('accuse'); closeMenus();">
           <span class="nav-icon">⚖</span> Make Accusation
         </div>
       </div>
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="main-content">
 
       <!-- Overview Panel -->
       <div id="panel-overview" class="content-panel active">
@@ -1014,7 +1329,7 @@
           </div>
         </div>
 
-        <div class="connections-hint" style="margin: 0 2rem 1.5rem;">
+        <div class="connections-hint">
           💡 <strong>Investigator's Hint:</strong> Start with the Crime Scene and Timeline to establish facts. Then cross-reference the Suspect profiles against the Witness Statements. The key contradiction is hiding in plain sight.
         </div>
       </div>
@@ -1047,9 +1362,9 @@
 
       <!-- Timeline Panel -->
       <div id="panel-timeline" class="content-panel">
-        <div style="margin-bottom:1.5rem;">
-          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Timeline of Events</div>
-          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">October 14–15, 1987</div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--paper); font-weight:700; margin-bottom:0.2rem;">Timeline of Events</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.65rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">October 14–15, 1987</div>
         </div>
 
         <div class="timeline">
@@ -1099,8 +1414,8 @@
       <!-- Suspects Panel -->
       <div id="panel-suspects" class="content-panel">
         <div style="margin-bottom:1.5rem;">
-          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Suspects</div>
-          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Five persons of interest · All present at Iyer Haveli that night</div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--paper); font-weight:700; margin-bottom:0.2rem;">Suspects</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.65rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Five persons of interest</div>
         </div>
 
         <div class="suspect-grid">
@@ -1108,40 +1423,40 @@
             <div class="suspect-avatar">👨</div>
             <div class="clearfix">
               <div class="suspect-name">Vikram Iyer</div>
-              <div class="suspect-role">Eldest Son · Age 34 · Accounts Manager</div>
+              <div class="suspect-role">Eldest Son · Age 34</div>
             </div>
             <div class="suspect-detail">Ran the family business but was being systematically sidelined by his father. Recently discovered to have embezzled ₹3 lakh over 18 months — the same irregularities Raghavendra was auditing the night he died. Disinherited in the new will.</div>
-            <div><span class="motive-tag">Motive: Inheritance + Cover-Up</span><span class="alibi-tag">Alibi: In his room — unverified</span></div>
+            <div><span class="motive-tag">Motive: Inheritance + Cover-Up</span></div>
           </div>
 
           <div class="suspect-card" onclick="openModal('malathi')">
             <div class="suspect-avatar">👩</div>
             <div class="clearfix">
               <div class="suspect-name">Malathi Iyer</div>
-              <div class="suspect-role">Daughter · Age 30 · Unmarried</div>
+              <div class="suspect-role">Daughter · Age 30</div>
             </div>
             <div class="suspect-detail">The most devoted child, but recently denied permission to marry a man from a lower caste. Had a bitter argument with her father two days before his death. Sole witness to the valet lingering outside the study door.</div>
-            <div><span class="motive-tag">Motive: Resentment</span><span class="alibi-tag">Alibi: Own room · partially corroborated</span></div>
+            <div><span class="motive-tag">Motive: Resentment</span></div>
           </div>
 
           <div class="suspect-card" onclick="openModal('suresh')">
             <div class="suspect-avatar">👦</div>
             <div class="clearfix">
               <div class="suspect-name">Suresh Iyer</div>
-              <div class="suspect-role">Youngest Son · Age 26 · Student</div>
+              <div class="suspect-role">Youngest Son · Age 26</div>
             </div>
             <div class="suspect-detail">Charming and largely disinterested in business. Has gambling debts amounting to ₹80,000 — unbeknownst to his father. Was seen near the kitchen at 11 PM. Had access to the household rat poison kept in the store-room.</div>
-            <div><span class="motive-tag">Motive: Debt / Inheritance</span><span class="alibi-tag">Alibi: Kitchen · Cook unaware</span></div>
+            <div><span class="motive-tag">Motive: Debt / Inheritance</span></div>
           </div>
 
           <div class="suspect-card" onclick="openModal('krishnamurthy')">
             <div class="suspect-avatar">🧑</div>
             <div class="clearfix">
               <div class="suspect-name">Krishnamurthy</div>
-              <div class="suspect-role">Personal Valet · Age 52 · 20 yrs service</div>
+              <div class="suspect-role">Personal Valet · Age 52</div>
             </div>
             <div class="suspect-detail">Unwaveringly loyal — or so it appeared. Was the last person to enter the study while Raghavendra was alive. Delivered the poisoned milk. Forensics found a faint arsenic trace on his left thumb, explained away as "cleaning powder" in 1987.</div>
-            <div><span class="motive-tag">Motive: Unknown — possibly paid</span><span class="alibi-tag">Alibi: Claims room after 9:45 PM</span></div>
+            <div><span class="motive-tag">Motive: Unknown — possibly paid</span></div>
           </div>
 
           <div class="suspect-card" onclick="openModal('sujatha')">
@@ -1151,11 +1466,11 @@
               <div class="suspect-role">Personal Physician · Age 44</div>
             </div>
             <div class="suspect-detail">Left at 8:20 PM — officially. But the gate watchman has no record of her departing. She had access to the deceased's medical history, knew his routines, and prescribed the sleeping tonic that was later partially interfered with. Old financial ties to Bhaskar Rao.</div>
-            <div><span class="motive-tag">Motive: Unclear — financial?</span><span class="alibi-tag">Alibi: Home — no corroboration</span></div>
+            <div><span class="motive-tag">Motive: Unclear — financial?</span></div>
           </div>
         </div>
 
-        <div class="connections-hint" style="margin-top:1.5rem;">
+        <div class="connections-hint">
           💡 <strong>Cross-reference:</strong> Compare each suspect's stated alibi against the timeline entries. At least two alibis contain direct contradictions with witness statements.
         </div>
       </div>
@@ -1163,8 +1478,8 @@
       <!-- Witnesses Panel -->
       <div id="panel-witnesses" class="content-panel">
         <div style="margin-bottom:1.5rem;">
-          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Witness Statements</div>
-          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Recorded October 15–18, 1987 · Original transcripts</div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--paper); font-weight:700; margin-bottom:0.2rem;">Witness Statements</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.65rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Recorded October 15–18, 1987</div>
         </div>
 
         <div class="paper-card">
@@ -1200,7 +1515,7 @@
         <div class="paper-card">
           <span class="stamp stamp-blue">Statement · 2024 (New)</span>
           <div class="card-heading">Bhaskar Rao</div>
-          <div class="card-subheading">Business Associate · Now 79 · Interviewed 2024</div>
+          <div class="card-subheading">Business Associate · Now 79</div>
           <div class="card-body">
             <p><em>"I visited that night because Raghavendra had accused me of colluding with Vikram to move inventory without his knowledge. I was furious — I did nothing wrong. I told him so. We argued, yes. But I left at nine-fifteen. On my life, I left. And I can tell you — when I was in that sitting room, I saw Vikram in the hallway, on a telephone call, whispering. That is unusual — there was no phone in the hallway. He must have brought the handset from somewhere."</em></p>
             <p><strong>⚠️ Key detail (NEW in 2024):</strong> Vikram was making a secret phone call at 8:45–9:00 PM. Phone records from 1987, recently digitised by BSNL archives, show a call from Iyer Haveli to Dr. Sujatha Reddy's clinic at 8:52 PM — lasting 11 minutes.</p>
@@ -1211,8 +1526,8 @@
       <!-- Evidence Panel -->
       <div id="panel-evidence" class="content-panel">
         <div style="margin-bottom:1.5rem;">
-          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Physical Evidence</div>
-          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Catalogued items · Some re-tested in 2024</div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--paper); font-weight:700; margin-bottom:0.2rem;">Physical Evidence</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.65rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Catalogued items · Some re-tested in 2024</div>
         </div>
 
         <div class="evidence-grid">
@@ -1294,17 +1609,17 @@
       <!-- Documents Panel -->
       <div id="panel-documents" class="content-panel">
         <div style="margin-bottom:1.5rem;">
-          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Documentary Evidence</div>
-          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Letters · Records · Correspondence</div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--paper); font-weight:700; margin-bottom:0.2rem;">Documentary Evidence</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.65rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Letters · Records · Correspondence</div>
         </div>
 
         <div class="paper-card">
           <span class="stamp stamp-blue">Letter</span>
           <div class="card-heading">Letter from Raghavendra to Vikram</div>
-          <div class="card-subheading">Dated October 12, 1987 · Found in victim's study</div>
+          <div class="card-subheading">Dated October 12, 1987</div>
           <div class="card-body">
-            <p style="font-style:italic; font-size:1.05rem;">"Vikram — I know about Account V-14. I know about the transfers. I have been patient too long. I am meeting Gopalakrishnan on Friday. After that, you will have no claims on this family or its wealth. Do not think I am unaware of your arrangements with others. I had hoped you would be honest with me. You were not. — Appa"</p>
-            <p style="margin-top:1rem; font-size:0.9rem; color:var(--faded);">Note: This letter was never sent — found sealed in the victim's drawer. Suggests he was building toward a confrontation, not contemplating suicide.</p>
+            <p style="font-style:italic; font-size:1rem;">"Vikram — I know about Account V-14. I know about the transfers. I have been patient too long. I am meeting Gopalakrishnan on Friday. After that, you will have no claims on this family or its wealth. Do not think I am unaware of your arrangements with others. I had hoped you would be honest with me. You were not. — Appa"</p>
+            <p style="margin-top:0.75rem; font-size:0.9rem; color:var(--faded);">Note: This letter was never sent — found sealed in the victim's drawer. Suggests he was building toward a confrontation, not contemplating suicide.</p>
           </div>
         </div>
 
@@ -1334,7 +1649,7 @@
         <div class="paper-card">
           <span class="stamp stamp-red">Forensic Report</span>
           <div class="card-heading">Post-Mortem Report</div>
-          <div class="card-subheading">Dr. K. Venkataraman, Mysore Medical College · October 15, 1987</div>
+          <div class="card-subheading">Dr. K. Venkataraman, Mysore Medical College</div>
           <div class="card-body">
             <p><strong>Cause of death:</strong> Acute arsenic poisoning. Arsenic trioxide detected in stomach, liver, and blood at levels of 4.2 mg/kg body weight — significantly above the lethal threshold of ~1–2 mg/kg.</p>
             <p><strong>Time of death:</strong> Estimated 10:30 PM – 12:30 AM based on body temperature, rigor mortis, and gastric contents.</p>
@@ -1357,8 +1672,8 @@
       <!-- Notes Panel -->
       <div id="panel-notes" class="content-panel">
         <div style="margin-bottom:1.5rem;">
-          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Investigator's Notes</div>
-          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Private working notes · Not part of official file</div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--paper); font-weight:700; margin-bottom:0.2rem;">Investigator's Notes</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.65rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Private working notes</div>
         </div>
         <div class="noteboard">
           <div class="noteboard-title">📝 Working Notes</div>
@@ -1380,8 +1695,8 @@ Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
       <!-- Accusation Panel -->
       <div id="panel-accuse" class="content-panel">
         <div style="margin-bottom:1.5rem;">
-          <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--paper); font-weight:700; margin-bottom:0.25rem;">Make Your Accusation</div>
-          <div style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Choose carefully — you only get one chance</div>
+          <div style="font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--paper); font-weight:700; margin-bottom:0.2rem;">Make Your Accusation</div>
+          <div style="font-family:'Special Elite',cursive; font-size:0.65rem; letter-spacing:0.2em; color:rgba(184,134,11,0.7); text-transform:uppercase;">Choose carefully — you only get one chance</div>
         </div>
 
         <div class="paper-card">
@@ -1396,7 +1711,7 @@ Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
 
         <div class="accusation-section">
           <div style="margin-bottom:1rem;">
-            <label style="font-family:'Special Elite',cursive; font-size:0.75rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase; display:block; margin-bottom:0.5rem;">Primary Killer</label>
+            <label style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase; display:block; margin-bottom:0.5rem;">Primary Killer</label>
             <select class="accusation-select" id="suspect-select">
               <option value="">— Select the killer —</option>
               <option value="vikram">Vikram Iyer · Eldest Son</option>
@@ -1407,7 +1722,7 @@ Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
             </select>
           </div>
           <div style="margin-bottom:1rem;">
-            <label style="font-family:'Special Elite',cursive; font-size:0.75rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase; display:block; margin-bottom:0.5rem;">Method Used</label>
+            <label style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase; display:block; margin-bottom:0.5rem;">Method Used</label>
             <select class="accusation-select" id="method-select">
               <option value="">— Select the method —</option>
               <option value="milk">Poison dissolved in the milk</option>
@@ -1417,7 +1732,7 @@ Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
             </select>
           </div>
           <div style="margin-bottom:1rem;">
-            <label style="font-family:'Special Elite',cursive; font-size:0.75rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase; display:block; margin-bottom:0.5rem;">Accomplice (if any)</label>
+            <label style="font-family:'Special Elite',cursive; font-size:0.7rem; letter-spacing:0.2em; color:var(--faded); text-transform:uppercase; display:block; margin-bottom:0.5rem;">Accomplice (if any)</label>
             <select class="accusation-select" id="accomplice-select">
               <option value="none">— No accomplice —</option>
               <option value="vikram">Vikram Iyer</option>
@@ -1434,26 +1749,26 @@ Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
     </div> <!-- end main-content -->
 
     <!-- Right Panel -->
-    <div class="right-panel">
+    <div class="right-panel" id="right-panel">
       <div class="panel-widget">
         <div class="widget-title">📊 Case Progress</div>
         <div class="progress-label">Evidence Reviewed</div>
         <div class="progress-bar-wrap">
           <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
         </div>
-        <div style="font-family:'Special Elite',cursive; font-size:0.8rem; color:var(--paper); text-align:right;" id="progress-text">0 / 12</div>
+        <div style="font-family:'Special Elite',cursive; font-size:0.75rem; color:var(--paper); text-align:right;" id="progress-text">0 / 12</div>
       </div>
 
       <div class="panel-widget">
         <div class="widget-title">🔑 Key Clues Found</div>
         <div id="clue-list">
-          <div style="font-family:'Crimson Text',serif; font-size:0.85rem; color:rgba(245,237,216,0.3); font-style:italic;">No clues catalogued yet. Review the Evidence section.</div>
+          <div style="font-family:'Crimson Text',serif; font-size:0.8rem; color:rgba(245,237,216,0.3); font-style:italic;">No clues catalogued yet. Review the Evidence section.</div>
         </div>
       </div>
 
       <div class="panel-widget">
         <div class="widget-title">🔗 Connections</div>
-        <div class="connections-hint" style="font-size:0.8rem; margin-bottom:0;">
+        <div class="connections-hint" style="font-size:0.75rem; margin-bottom:0;">
           Vikram ←→ Phone Call ←→ Dr. Reddy<br>
           Vikram ←→ Bank Transfer ←→ Dr. Reddy<br>
           Dr. Reddy ←→ Back Stairs ←→ Study Window<br>
@@ -1497,7 +1812,7 @@ Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
 <!-- Modal -->
 <div class="modal-overlay" id="modal">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">✕ Close</button>
+    <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-title" id="modal-title"></div>
     <div class="modal-subtitle" id="modal-subtitle"></div>
     <div class="modal-body" id="modal-body"></div>
@@ -1572,7 +1887,29 @@ Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
   function startGame() {
     document.getElementById('title-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'flex';
-    document.getElementById('game-screen').style.flexDirection = 'column';
+  }
+
+  function toggleMenu() {
+    const sidebar = document.getElementById('sidebar');
+    const rightPanel = document.getElementById('right-panel');
+    sidebar.classList.toggle('open');
+    if (rightPanel.classList.contains('open')) {
+      rightPanel.classList.remove('open');
+    }
+  }
+
+  function togglePanel() {
+    const rightPanel = document.getElementById('right-panel');
+    const sidebar = document.getElementById('sidebar');
+    rightPanel.classList.toggle('open');
+    if (sidebar.classList.contains('open')) {
+      sidebar.classList.remove('open');
+    }
+  }
+
+  function closeMenus() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('right-panel').classList.remove('open');
   }
 
   function showPanel(id) {
@@ -1580,7 +1917,8 @@ Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     const panel = document.getElementById('panel-' + id);
     if (panel) panel.classList.add('active');
-    event.currentTarget.classList.add('active');
+    document.querySelector(`[onclick="showPanel('${id}')"]`)?.classList.add('active');
+    document.getElementById('main-content').scrollTop = 0;
   }
 
   function openModal(suspect) {
@@ -1600,7 +1938,6 @@ Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
       foundClues.add(clueId);
       updateClueList();
     }
-    // Flash feedback
     const cards = document.querySelectorAll('.evidence-card');
     cards.forEach(card => {
       if (card.getAttribute('onclick') && card.getAttribute('onclick').includes(clueId)) {
@@ -1689,10 +2026,16 @@ Theory: Vikram hired Dr. Reddy to administer the poison..."></textarea>
     showPanel('overview');
   }
 
-  // Close modal on overlay click
   document.getElementById('modal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
+
+  // Prevent zoom on mobile
+  document.addEventListener('touchmove', function(e) {
+    if (e.touches.length > 1) {
+      e.preventDefault();
+    }
+  }, { passive: false });
 </script>
 </body>
 </html>
